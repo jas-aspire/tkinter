@@ -1,0 +1,2442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TkDocs — Complete Tkinter Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TkDocs — Premium Tkinter Documentation
+   Design: Deep navy + warm amber, editorial typographic style
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
+
+/* ── Variables ────────────────────────────────────────────── */
+:root {
+  --navy:      #0b0f1a;
+  --navy-2:    #111827;
+  --navy-3:    #1a2236;
+  --navy-4:    #243047;
+  --border:    #2a3650;
+  --amber:     #f59e0b;
+  --amber-dim: #d97706;
+  --amber-glow:#fbbf24;
+  --teal:      #14b8a6;
+  --rose:      #f43f5e;
+  --violet:    #8b5cf6;
+  --green:     #10b981;
+  --sky:       #38bdf8;
+  --text:      #e2e8f0;
+  --text-dim:  #94a3b8;
+  --text-faint:#475569;
+  --code-bg:   #0d1321;
+  --sidebar-w: 280px;
+  --radius:    8px;
+  --shadow:    0 4px 32px rgba(0,0,0,.45);
+}
+
+/* ── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--navy-2); }
+::-webkit-scrollbar-thumb { background: var(--navy-4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--amber-dim); }
+
+/* ── Sidebar ──────────────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: var(--navy-2);
+  border-right: 1px solid var(--border);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  flex-shrink: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-logo {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sidebar-logo a { text-decoration: none; }
+.logo-mark {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: var(--amber);
+  letter-spacing: -.5px;
+}
+.logo-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem;
+  color: var(--text-faint);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 2px;
+}
+.sidebar-search {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sidebar-search input {
+  width: 100%;
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 12px 7px 32px;
+  color: var(--text);
+  font-size: .85rem;
+  font-family: 'JetBrains Mono', monospace;
+  outline: none;
+  transition: border-color .2s;
+}
+.sidebar-search input:focus { border-color: var(--amber); }
+.sidebar-search { position: relative; }
+.search-icon {
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-faint);
+  font-size: .8rem;
+  pointer-events: none;
+}
+.sidebar-nav { flex: 1; padding: 8px 0 24px; overflow-y: auto; }
+.nav-section { margin-bottom: 4px; }
+.nav-section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 12px 20px 4px;
+  display: block;
+}
+.nav-section a {
+  display: block;
+  padding: 5px 20px 5px 20px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: .875rem;
+  font-family: 'Source Serif 4', serif;
+  transition: all .15s;
+  border-left: 2px solid transparent;
+  position: relative;
+}
+.nav-section a:hover { color: var(--text); background: var(--navy-3); border-left-color: var(--amber-dim); }
+.nav-section a.active { color: var(--amber); background: rgba(245,158,11,.08); border-left-color: var(--amber); }
+.nav-section a .badge {
+  float: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .6rem;
+  background: var(--navy-4);
+  color: var(--text-faint);
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-top: 2px;
+}
+.nav-section a.active .badge { background: rgba(245,158,11,.2); color: var(--amber); }
+
+/* ── Main Content ─────────────────────────────────────────── */
+#main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+#topbar {
+  background: var(--navy-2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  flex-shrink: 0;
+}
+.topbar-breadcrumb {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .75rem;
+  color: var(--text-faint);
+  flex: 1;
+}
+.topbar-breadcrumb span { color: var(--text-dim); }
+.topbar-version {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .7rem;
+  color: var(--text-faint);
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+.topbar-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 4px;
+}
+article {
+  max-width: 860px;
+  padding: 48px 56px 80px;
+  width: 100%;
+}
+
+/* ── Typography ───────────────────────────────────────────── */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #fff;
+  margin-bottom: .5rem;
+}
+h1 .subtitle {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  font-family: 'Source Serif 4', serif;
+  margin-top: 8px;
+  font-style: italic;
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 2.5rem 0 .75rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+h2:first-of-type { border-top: none; margin-top: 2rem; padding-top: 0; }
+h3 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--amber-glow);
+  margin: 1.75rem 0 .5rem;
+}
+h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--sky);
+  margin: 1.25rem 0 .4rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+p { margin-bottom: 1rem; color: var(--text); }
+a { color: var(--amber); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: #fff; font-weight: 600; }
+em { color: var(--amber-glow); font-style: italic; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+li { margin-bottom: .3rem; }
+
+/* ── Page Header ──────────────────────────────────────────── */
+.page-header {
+  background: linear-gradient(135deg, var(--navy-3) 0%, var(--navy-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 40px;
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(245,158,11,.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-header .tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .7rem;
+  background: rgba(245,158,11,.15);
+  color: var(--amber);
+  border: 1px solid rgba(245,158,11,.3);
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ── Code Blocks ──────────────────────────────────────────── */
+.code-wrap {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1.25rem 0;
+  box-shadow: var(--shadow);
+}
+.code-header {
+  background: var(--navy-3);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.code-dots { display: flex; gap: 6px; }
+.code-dots span {
+  width: 11px; height: 11px; border-radius: 50%;
+}
+.code-dots span:nth-child(1) { background: #ff5f56; }
+.code-dots span:nth-child(2) { background: #ffbd2e; }
+.code-dots span:nth-child(3) { background: #27c93f; }
+.code-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .7rem;
+  color: var(--text-faint);
+  flex: 1;
+}
+.copy-btn {
+  background: var(--navy-4);
+  border: 1px solid var(--border);
+  color: var(--text-faint);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem;
+  padding: 3px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.copy-btn:hover { color: var(--amber); border-color: var(--amber-dim); }
+pre {
+  padding: 20px 20px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .875rem;
+  line-height: 1.7;
+  background: none;
+  border: none;
+  margin: 0;
+}
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .85em;
+  background: rgba(245,158,11,.1);
+  color: var(--amber-glow);
+  padding: 1px 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(245,158,11,.15);
+}
+pre code { background: none; border: none; padding: 0; font-size: inherit; color: inherit; }
+
+/* Syntax */
+.kw  { color: #c792ea; }
+.fn  { color: #82aaff; }
+.cls { color: #ffcb6b; }
+.str { color: #c3e88d; }
+.num { color: #f78c6c; }
+.cm  { color: #546e7a; font-style: italic; }
+.op  { color: #89ddff; }
+.dec { color: #f07178; }
+.self{ color: #ff5370; }
+.bi  { color: #ffcb6b; }
+
+/* ── Tables ───────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+thead th {
+  background: var(--navy-3);
+  color: var(--amber);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 10px 16px;
+  border-bottom: 2px solid var(--border);
+  text-align: left;
+  white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:hover { background: rgba(255,255,255,.02); }
+tbody td { padding: 9px 16px; vertical-align: top; }
+tbody td:first-child {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8rem;
+  color: var(--sky);
+  white-space: nowrap;
+}
+tbody td:last-child { color: var(--text-dim); font-size: .875rem; }
+
+/* ── Callouts ─────────────────────────────────────────────── */
+.callout {
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 1.5rem 0;
+  border-left: 3px solid;
+  font-size: .925rem;
+}
+.callout-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.callout.tip   { background: rgba(16,185,129,.07);  border-color: var(--green);  }
+.callout.tip   .callout-title { color: var(--green); }
+.callout.note  { background: rgba(56,189,248,.07);  border-color: var(--sky);    }
+.callout.note  .callout-title { color: var(--sky);  }
+.callout.warn  { background: rgba(245,158,11,.07);  border-color: var(--amber);  }
+.callout.warn  .callout-title { color: var(--amber); }
+.callout.danger{ background: rgba(244,63,94,.07);   border-color: var(--rose);   }
+.callout.danger .callout-title { color: var(--rose); }
+.callout p { margin-bottom: 0; }
+
+/* ── Method / Option Signature ────────────────────────────── */
+.sig {
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius);
+  padding: 12px 18px;
+  margin: 1rem 0 .5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .875rem;
+  line-height: 1.5;
+  color: var(--text);
+  overflow-x: auto;
+}
+.sig .name { color: var(--teal); font-weight: 700; }
+.sig .arg  { color: var(--sky); }
+.sig .ret  { color: var(--amber); font-style: italic; }
+.sig .default { color: var(--text-faint); }
+
+/* ── Widget Cards ─────────────────────────────────────────── */
+.widget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+.widget-card {
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-decoration: none;
+  transition: all .2s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.widget-card:hover {
+  border-color: var(--amber-dim);
+  background: var(--navy-4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  text-decoration: none;
+}
+.widget-card .wc-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .875rem;
+  font-weight: 700;
+  color: var(--amber);
+}
+.widget-card .wc-desc {
+  font-size: .8rem;
+  color: var(--text-faint);
+  font-family: 'Source Serif 4', serif;
+}
+.widget-card .wc-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .6rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Comparison Tables ────────────────────────────────────── */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 1.5rem 0;
+}
+.compare-col {
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.compare-col-header {
+  padding: 10px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.compare-col.classic .compare-col-header { background: rgba(139,92,246,.15); color: var(--violet); border-bottom: 1px solid rgba(139,92,246,.3); }
+.compare-col.ttk     .compare-col-header { background: rgba(20,184,166,.15); color: var(--teal);   border-bottom: 1px solid rgba(20,184,166,.3); }
+.compare-col ul { list-style: none; padding: 12px 16px; margin: 0; }
+.compare-col li { padding: 4px 0; font-size: .875rem; color: var(--text-dim); border-bottom: 1px solid rgba(255,255,255,.04); }
+.compare-col li:last-child { border-bottom: none; }
+
+/* ── Output Preview ───────────────────────────────────────── */
+.preview {
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1.25rem 0;
+  box-shadow: var(--shadow);
+}
+.preview-bar {
+  background: #e0e0e0;
+  padding: 6px 12px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.preview-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
+.preview-bar .dot:nth-child(1) { background: #ff5f56; }
+.preview-bar .dot:nth-child(2) { background: #ffbd2e; }
+.preview-bar .dot:nth-child(3) { background: #27c93f; }
+.preview-bar .title { margin-left: 8px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: #666; }
+.preview-body {
+  background: #f0f0f0;
+  padding: 20px;
+  font-family: 'TkDefaultFont', Arial, sans-serif;
+  font-size: 13px;
+  color: #000;
+}
+
+/* ── Tags / Badges ────────────────────────────────────────── */
+.tag-amber  { font-family:'JetBrains Mono',monospace; font-size:.7rem; background:rgba(245,158,11,.15); color:var(--amber); border:1px solid rgba(245,158,11,.3); padding:2px 8px; border-radius:3px; display:inline-block; }
+.tag-teal   { font-family:'JetBrains Mono',monospace; font-size:.7rem; background:rgba(20,184,166,.15); color:var(--teal); border:1px solid rgba(20,184,166,.3); padding:2px 8px; border-radius:3px; display:inline-block; }
+.tag-violet { font-family:'JetBrains Mono',monospace; font-size:.7rem; background:rgba(139,92,246,.15); color:var(--violet); border:1px solid rgba(139,92,246,.3); padding:2px 8px; border-radius:3px; display:inline-block; }
+.tag-rose   { font-family:'JetBrains Mono',monospace; font-size:.7rem; background:rgba(244,63,94,.15); color:var(--rose); border:1px solid rgba(244,63,94,.3); padding:2px 8px; border-radius:3px; display:inline-block; }
+
+/* ── Page Nav (prev/next) ─────────────────────────────────── */
+.page-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.page-nav a {
+  flex: 1;
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  text-decoration: none;
+  transition: all .15s;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.page-nav a:hover { border-color: var(--amber-dim); background: var(--navy-4); }
+.page-nav a .direction {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.page-nav a .pn-title { font-size: .95rem; color: var(--amber); }
+.page-nav a.prev { text-align: left; }
+.page-nav a.next { text-align: right; }
+
+/* ── TOC (on-page) ────────────────────────────────────────── */
+.toc {
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 1.5rem 0;
+  font-size: .875rem;
+}
+.toc-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+}
+.toc ol { margin: 0; padding-left: 1.25rem; }
+.toc li { margin-bottom: 2px; }
+.toc a { color: var(--text-dim); }
+.toc a:hover { color: var(--amber); }
+
+/* ── Option Parameter Box ─────────────────────────────────── */
+.param-box {
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1rem 0;
+}
+.param-box-header {
+  background: var(--navy-4);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.param-box-header .pname {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--sky);
+}
+.param-box-header .pdefault {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .75rem;
+  color: var(--text-faint);
+}
+.param-box-body { padding: 12px 16px; font-size: .9rem; color: var(--text-dim); }
+
+/* ── Step List ────────────────────────────────────────────── */
+.steps { list-style: none; padding: 0; counter-reset: step; }
+.steps li {
+  padding: 12px 16px 12px 52px;
+  position: relative;
+  border-left: 2px solid var(--border);
+  margin-left: 20px;
+  margin-bottom: 4px;
+}
+.steps li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: -14px;
+  top: 12px;
+  width: 26px; height: 26px;
+  background: var(--amber);
+  color: var(--navy);
+  border-radius: 50%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.steps li:last-child { border-left-color: transparent; }
+
+/* ── Hero Index Grid ──────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--navy-3) 0%, #0d1525 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 48px 48px 40px;
+  margin-bottom: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: 'Tk';
+  position: absolute;
+  right: 40px;
+  top: 30px;
+  font-family: 'Playfair Display', serif;
+  font-size: 8rem;
+  font-weight: 900;
+  color: rgba(245,158,11,.06);
+  line-height: 1;
+  pointer-events: none;
+}
+.hero h1 { font-size: 3.2rem; margin-bottom: .75rem; }
+.hero p { font-size: 1.1rem; color: var(--text-dim); max-width: 500px; }
+.hero-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--amber);
+  color: var(--navy);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .875rem;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all .15s;
+}
+.btn-primary:hover { background: var(--amber-glow); text-decoration: none; transform: translateY(-1px); }
+.btn-secondary {
+  background: var(--navy-4);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .875rem;
+  padding: 10px 22px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all .15s;
+}
+.btn-secondary:hover { border-color: var(--amber-dim); color: var(--amber); text-decoration: none; }
+
+/* ── Index card grid ──────────────────────────────────────── */
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 1.5rem 0;
+}
+.section-card {
+  background: var(--navy-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-decoration: none;
+  transition: all .2s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.section-card:hover { border-color: var(--amber-dim); background: var(--navy-4); transform: translateY(-2px); text-decoration: none; }
+.section-card .icon { font-size: 1.5rem; margin-bottom: 4px; }
+.section-card .sc-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
+.section-card .sc-desc { font-size: .8rem; color: var(--text-faint); line-height: 1.5; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  #sidebar { position: fixed; left: -100%; transition: left .3s; }
+  #sidebar.open { left: 0; }
+  .topbar-menu-btn { display: block; }
+  article { padding: 28px 24px 60px; }
+  .compare-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 2rem; }
+}
+@media (max-width: 600px) {
+  #topbar { padding: 0 16px; }
+  .hero { padding: 28px 24px; }
+  .hero h1 { font-size: 2rem; }
+  .page-nav { flex-direction: column; }
+}
+
+/* ── Utility ──────────────────────────────────────────────── */
+.mt-0 { margin-top: 0 !important; }
+.flex { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+.inline-code { font-family: 'JetBrains Mono', monospace; font-size: .8em; color: var(--sky); }
+hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+details { background: var(--navy-3); border: 1px solid var(--border); border-radius: var(--radius); margin: 1rem 0; }
+details summary { padding: 12px 16px; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: .875rem; color: var(--text); }
+details summary:hover { color: var(--amber); }
+details > *:not(summary) { padding: 0 16px 16px; }
+
+
+/* ── Single-Page App extras ── */
+.page-section { display: none; }
+.page-section.active { display: block; }
+#topbar-title { color: var(--text-dim); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <a href="#" onclick="showPage('home'); return false;">
+      <div class="logo-mark">TkDocs</div>
+      <span class="logo-sub">Python · Tkinter · Complete Reference</span>
+    </a>
+  </div>
+  <div class="sidebar-search">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="sidebar-search" placeholder="Filter…" autocomplete="off">
+  </div>
+  <nav class="sidebar-nav" id="sidebar-nav">
+    <div class="nav-section">
+      <span class="nav-section-title">Getting Started</span>
+      <a href="#" onclick="showPage('home')">Overview</a>
+      <a href="#" onclick="showPage('quickstart')">Quick Start</a>
+      <a href="#" onclick="showPage('architecture')">Architecture</a>
+    </div>
+    <div class="nav-section">
+      <span class="nav-section-title">Core Concepts</span>
+      <a href="#" onclick="showPage('geometry')">Geometry Managers</a>
+      <a href="#" onclick="showPage('events')">Events &amp; Bindings</a>
+      <a href="#" onclick="showPage('variables')">Tk Variables</a>
+    </div>
+    <div class="nav-section">
+      <span class="nav-section-title">Classic Widgets (tk)</span>
+      <a href="#" onclick="showPage('w-label')">Label</a>
+      <a href="#" onclick="showPage('w-button')">Button</a>
+      <a href="#" onclick="showPage('w-entry')">Entry</a>
+      <a href="#" onclick="showPage('w-text')">Text</a>
+      <a href="#" onclick="showPage('w-frame')">Frame &amp; LabelFrame</a>
+      <a href="#" onclick="showPage('w-canvas')">Canvas</a>
+      <a href="#" onclick="showPage('w-listbox')">Listbox</a>
+      <a href="#" onclick="showPage('w-scrollbar')">Scrollbar</a>
+      <a href="#" onclick="showPage('w-checkbutton')">Checkbutton</a>
+      <a href="#" onclick="showPage('w-radiobutton')">Radiobutton</a>
+      <a href="#" onclick="showPage('w-scale')">Scale</a>
+      <a href="#" onclick="showPage('w-spinbox')">Spinbox</a>
+      <a href="#" onclick="showPage('w-menu')">Menu</a>
+      <a href="#" onclick="showPage('w-toplevel')">Toplevel</a>
+    </div>
+    <div class="nav-section">
+      <span class="nav-section-title">Themed Widgets (ttk)</span>
+      <a href="#" onclick="showPage('ttk-overview')">TTK Overview</a>
+      <a href="#" onclick="showPage('ttk-style')">Style System</a>
+      <a href="#" onclick="showPage('ttk-notebook')">ttk.Notebook</a>
+      <a href="#" onclick="showPage('ttk-treeview')">ttk.Treeview</a>
+      <a href="#" onclick="showPage('ttk-progressbar')">ttk.Progressbar</a>
+      <a href="#" onclick="showPage('ttk-combobox')">ttk.Combobox</a>
+    </div>
+    <div class="nav-section">
+      <span class="nav-section-title">Advanced</span>
+      <a href="#" onclick="showPage('dialogs')">Dialogs</a>
+      <a href="#" onclick="showPage('threading')">Threading</a>
+      <a href="#" onclick="showPage('images')">Images</a>
+      <a href="#" onclick="showPage('fonts')">Fonts</a>
+      <a href="#" onclick="showPage('patterns')">Common Patterns</a>
+    </div>
+  </nav>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN
+════════════════════════════════════════════════════════════ -->
+<div id="main">
+  <div id="topbar">
+    <button class="topbar-menu-btn" id="menu-btn">☰</button>
+    <div class="topbar-breadcrumb">TkDocs / <span id="topbar-title">Overview</span></div>
+    <div class="topbar-version">Python 3.12 · Tk 8.6</div>
+  </div>
+  <article>
+
+<div class="page-section" id="page-home">
+
+<div class="hero">
+  <h1>Tkinter<span class="subtitle">The Complete Python GUI Reference</span></h1>
+  <p>Everything you need to build desktop applications with Python's standard GUI toolkit — beautifully documented with real examples.</p>
+  <div class="hero-actions">
+    <a href="#" onclick="showPage('quickstart')" class="btn-primary">Quick Start →</a>
+    <a href="#" onclick="showPage('ttk-overview')" class="btn-secondary">TTK Widgets</a>
+    <a href="#" onclick="showPage('patterns')" class="btn-secondary">Patterns</a>
+  </div>
+</div>
+
+<h2 class="mt-0">What is Tkinter?</h2>
+<p>Tkinter is Python's standard GUI library — a thin object-oriented layer on top of <strong>Tcl/Tk</strong>, a mature cross-platform windowing toolkit. It ships with every standard Python distribution. No extra installation required.</p>
+<p>With Tkinter you can build windows, dialogs, forms, data-entry tools, visualizations, and full desktop applications that run on Windows, macOS, and Linux from a single codebase.</p>
+
+<div class="compare-grid">
+  <div class="compare-col classic">
+    <div class="compare-col-header">✦ Classic tk widgets</div>
+    <ul>
+      <li>Built directly into Tk</li>
+      <li>Full option control</li>
+      <li>Consistent cross-platform look</li>
+      <li>Simpler mental model</li>
+    </ul>
+  </div>
+  <div class="compare-col ttk">
+    <div class="compare-col-header">✦ Themed ttk widgets</div>
+    <ul>
+      <li>Native OS appearance</li>
+      <li>Style / theme engine</li>
+      <li>Extra widgets: Treeview, Notebook…</li>
+      <li>Preferred for modern apps</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Browse the Documentation</h2>
+<div class="section-grid">
+  <a href="#" onclick="showPage('quickstart')" class="section-card"><div class="icon">🚀</div><div class="sc-title">Quick Start</div><div class="sc-desc">Build your first window in minutes. Temperature converter walkthrough.</div></a>
+  <a href="#" onclick="showPage('architecture')" class="section-card"><div class="icon">🏗</div><div class="sc-title">Architecture</div><div class="sc-desc">How Tk, Tcl, and Python work together. The event loop explained.</div></a>
+  <a href="#" onclick="showPage('geometry')" class="section-card"><div class="icon">📐</div><div class="sc-title">Geometry Managers</div><div class="sc-desc">pack, grid, and place — laying out widgets precisely.</div></a>
+  <a href="#" onclick="showPage('events')" class="section-card"><div class="icon">⚡</div><div class="sc-title">Events &amp; Bindings</div><div class="sc-desc">Mouse clicks, keyboard input, custom virtual events.</div></a>
+  <a href="#" onclick="showPage('variables')" class="section-card"><div class="icon">🔗</div><div class="sc-title">Tk Variables</div><div class="sc-desc">StringVar, IntVar, DoubleVar, BooleanVar and trace callbacks.</div></a>
+  <a href="#" onclick="showPage('ttk-overview')" class="section-card"><div class="icon">🎨</div><div class="sc-title">TTK &amp; Themes</div><div class="sc-desc">Native-looking widgets and the powerful style engine.</div></a>
+  <a href="#" onclick="showPage('w-canvas')" class="section-card"><div class="icon">🖼</div><div class="sc-title">Canvas</div><div class="sc-desc">Draw shapes, text, images, build custom interactive graphics.</div></a>
+  <a href="#" onclick="showPage('dialogs')" class="section-card"><div class="icon">💬</div><div class="sc-title">Dialogs</div><div class="sc-desc">File choosers, color pickers, message boxes, custom dialogs.</div></a>
+  <a href="#" onclick="showPage('threading')" class="section-card"><div class="icon">🧵</div><div class="sc-title">Threading</div><div class="sc-desc">Keep your UI responsive while doing background work.</div></a>
+  <a href="#" onclick="showPage('patterns')" class="section-card"><div class="icon">📋</div><div class="sc-title">Common Patterns</div><div class="sc-desc">MVC, scrollable frames, tooltips, validated entries and more.</div></a>
+</div>
+
+<h2>A Minimal Example</h2>
+<div class="code-wrap">
+  <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">hello.py</div><button class="copy-btn">Copy</button></div>
+  <pre><code><span class="kw">import</span> tkinter <span class="kw">as</span> tk
+<span class="kw">from</span> tkinter <span class="kw">import</span> ttk
+
+<span class="kw">def</span> <span class="fn">greet</span>():
+    label.<span class="fn">config</span>(text=<span class="str">f"Hello, {name.get()}!"</span>)
+
+root = tk.<span class="cls">Tk</span>()
+root.<span class="fn">title</span>(<span class="str">"Hello Tkinter"</span>)
+root.<span class="fn">geometry</span>(<span class="str">"300x120"</span>)
+
+name = tk.<span class="cls">StringVar</span>()
+ttk.<span class="cls">Entry</span>(root, textvariable=name).<span class="fn">pack</span>(pady=<span class="num">12</span>)
+ttk.<span class="cls">Button</span>(root, text=<span class="str">"Greet"</span>, command=greet).<span class="fn">pack</span>()
+label = ttk.<span class="cls">Label</span>(root, text=<span class="str">""</span>)
+label.<span class="fn">pack</span>(pady=<span class="num">8</span>)
+
+root.<span class="fn">mainloop</span>()</code></pre>
+</div>
+<div class="callout note"><div class="callout-title">ℹ️ Python Version</div><p>This documentation targets <strong>Python 3.8+</strong> with <strong>Tk 8.6</strong>. Most examples work on older versions, but some features (like <code>ttk.Spinbox</code>) require Tk 8.6.</p></div>
+
+</div>
+
+<div class="page-section" id="page-quickstart">
+
+<div class="page-header"><div class="tag">Getting Started</div>
+<h1>Quick Start<span class="subtitle">From zero to a working Tkinter application</span></h1></div>
+
+<h2 id="qs-install">Installation</h2>
+<p>Tkinter ships with Python. Verify it is available:</p>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">terminal</div><button class="copy-btn">Copy</button></div>
+<pre><code>python -c <span class="str">"import tkinter; print(tkinter.TkVersion)"</span>
+<span class="cm"># Should print: 8.6</span></code></pre></div>
+<div class="callout warn"><div class="callout-title">⚠️ Linux Users</div><p>On Ubuntu/Debian, run: <code>sudo apt-get install python3-tk</code></p></div>
+
+<h2 id="qs-window">Your First Window</h2>
+<p>Every Tkinter app follows the same three-step pattern:</p>
+<ol class="steps">
+  <li>Create the <strong>root window</strong> — <code>tk.Tk()</code></li>
+  <li>Add <strong>widgets</strong> inside it</li>
+  <li>Start the <strong>event loop</strong> — <code>root.mainloop()</code></li>
+</ol>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">first_window.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">import</span> tkinter <span class="kw">as</span> tk
+
+root = tk.<span class="cls">Tk</span>()
+root.<span class="fn">title</span>(<span class="str">"My First App"</span>)
+root.<span class="fn">geometry</span>(<span class="str">"400x300"</span>)  <span class="cm"># Width x Height</span>
+root.<span class="fn">mainloop</span>()</code></pre></div>
+
+<h2 id="qs-app">Complete App: Temperature Converter</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">temp_converter.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">import</span> tkinter <span class="kw">as</span> tk
+<span class="kw">from</span> tkinter <span class="kw">import</span> ttk
+
+<span class="kw">class</span> <span class="cls">TempConverter</span>(tk.<span class="cls">Tk</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>):
+        <span class="fn">super</span>().__init__()
+        <span class="self">self</span>.<span class="fn">title</span>(<span class="str">"Temperature Converter"</span>)
+        <span class="self">self</span>.<span class="fn">resizable</span>(<span class="bi">False</span>, <span class="bi">False</span>)
+        <span class="self">self</span>.celsius    = tk.<span class="cls">StringVar</span>(value=<span class="str">"0"</span>)
+        <span class="self">self</span>.fahrenheit = tk.<span class="cls">StringVar</span>(value=<span class="str">"32"</span>)
+        <span class="self">self</span>.<span class="fn">_build_ui</span>()
+        <span class="self">self</span>.celsius.<span class="fn">trace_add</span>(<span class="str">"write"</span>, <span class="self">self</span>._from_c)
+        <span class="self">self</span>.fahrenheit.<span class="fn">trace_add</span>(<span class="str">"write"</span>, <span class="self">self</span>._from_f)
+
+    <span class="kw">def</span> <span class="fn">_build_ui</span>(<span class="self">self</span>):
+        f = ttk.<span class="cls">Frame</span>(<span class="self">self</span>, padding=<span class="num">20</span>)
+        f.<span class="fn">pack</span>()
+        ttk.<span class="cls">Label</span>(f, text=<span class="str">"°C"</span>).<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">1</span>)
+        ttk.<span class="cls">Entry</span>(f, textvariable=<span class="self">self</span>.celsius,    width=<span class="num">10</span>).<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">0</span>)
+        ttk.<span class="cls">Label</span>(f, text=<span class="str">" = "</span>).<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">2</span>)
+        ttk.<span class="cls">Entry</span>(f, textvariable=<span class="self">self</span>.fahrenheit, width=<span class="num">10</span>).<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">3</span>)
+        ttk.<span class="cls">Label</span>(f, text=<span class="str">"°F"</span>).<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">4</span>)
+
+    <span class="kw">def</span> <span class="fn">_from_c</span>(<span class="self">self</span>, *_):
+        <span class="kw">try</span>: <span class="self">self</span>.fahrenheit.<span class="fn">set</span>(<span class="str">f"{float(self.celsius.get())*9/5+32:.2f}"</span>)
+        <span class="kw">except</span>: <span class="kw">pass</span>
+
+    <span class="kw">def</span> <span class="fn">_from_f</span>(<span class="self">self</span>, *_):
+        <span class="kw">try</span>: <span class="self">self</span>.celsius.<span class="fn">set</span>(<span class="str">f"{(float(self.fahrenheit.get())-32)*5/9:.2f}"</span>)
+        <span class="kw">except</span>: <span class="kw">pass</span>
+
+<span class="cls">TempConverter</span>().<span class="fn">mainloop</span>()</code></pre></div>
+<div class="callout tip"><div class="callout-title">💡 Class-Based Apps</div><p>Subclassing <code>tk.Tk</code> keeps your code organised and scales well as apps grow.</p></div>
+
+</div>
+
+<div class="page-section" id="page-architecture">
+
+<div class="page-header"><div class="tag">Core Concepts</div>
+<h1>Architecture<span class="subtitle">How Python, Tkinter, Tcl, and Tk fit together</span></h1></div>
+
+<h2>The Technology Stack</h2>
+<p>Tkinter is a <em>binding</em> — it exposes a Python API for the <strong>Tk GUI toolkit</strong>, written in C and controlled via the <strong>Tcl scripting language</strong>.</p>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">abstraction layers</div></div>
+<pre><code>  ┌─────────────────────────────────┐
+  │     Your Python Application     │  ← You write this
+  ├─────────────────────────────────┤
+  │   tkinter  (Python module)      │  ← Python ↔ Tcl bridge
+  ├─────────────────────────────────┤
+  │   Tcl/Tk   (C library)          │  ← Actual GUI engine
+  ├─────────────────────────────────┤
+  │   OS windowing system           │  ← Win32 / Cocoa / X11
+  └─────────────────────────────────┘</code></pre></div>
+
+<h2>The Tk Instance</h2>
+<p>Every Tkinter application has exactly <strong>one</strong> <code>tk.Tk()</code> instance. It represents the connection to the Tk interpreter and creates the main (root) window.</p>
+<div class="callout warn"><div class="callout-title">⚠️ Only One Tk()</div><p>Never create more than one <code>tk.Tk()</code>. For additional windows use <code>tk.Toplevel()</code>. Multiple <code>Tk()</code> instances cause unpredictable behaviour.</p></div>
+
+<h2>Widget Hierarchy</h2>
+<p>Widgets form a <strong>parent-child tree</strong>. Every widget (except root) has a parent passed as the first positional argument.</p>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">hierarchy.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>root  = tk.<span class="cls">Tk</span>()                        <span class="cm"># "."</span>
+frame = ttk.<span class="cls">Frame</span>(root)              <span class="cm"># ".!frame"</span>
+label = ttk.<span class="cls">Label</span>(frame, text=<span class="str">"Hi"</span>) <span class="cm"># ".!frame.!label"</span>
+
+<span class="fn">print</span>(label.<span class="fn">winfo_parent</span>())          <span class="cm"># ".!frame"</span>
+<span class="fn">print</span>(frame.<span class="fn">winfo_children</span>())        <span class="cm"># [&lt;Label .!frame.!label&gt;]</span></code></pre></div>
+
+<h2>The Event Loop</h2>
+<p>Tkinter is <em>event-driven</em>. After <code>mainloop()</code>, Tkinter continuously: waits for an event → dispatches to handlers → redraws changed widgets → repeat. Long-running code in a callback <strong>blocks</strong> and freezes the UI — see <a href="#" onclick="showPage('threading')">Threading</a>.</p>
+
+<h2>tk vs ttk</h2>
+<div class="compare-grid">
+  <div class="compare-col classic">
+    <div class="compare-col-header">tkinter (tk)</div>
+    <ul>
+      <li>Original widgets since the 1990s</li>
+      <li>Configure every visual property directly</li>
+      <li>Consistent cross-platform look (not native)</li>
+      <li><code>import tkinter as tk</code></li>
+    </ul>
+  </div>
+  <div class="compare-col ttk">
+    <div class="compare-col-header">tkinter.ttk (ttk)</div>
+    <ul>
+      <li>Introduced in Tk 8.5</li>
+      <li>Uses OS native appearance where possible</li>
+      <li>Extra widgets: Treeview, Notebook, Progressbar…</li>
+      <li><code>from tkinter import ttk</code></li>
+    </ul>
+  </div>
+</div>
+<div class="callout tip"><div class="callout-title">💡 Best Practice</div><p>Prefer <code>ttk</code> widgets whenever they exist. Fall back to <code>tk</code> for Canvas, Text, Listbox, and other widgets with no ttk equivalent.</p></div>
+
+</div>
+
+<div class="page-section" id="page-geometry">
+
+<div class="page-header"><div class="tag">Core Concepts</div>
+<h1>Geometry Managers<span class="subtitle">Controlling widget size and position</span></h1></div>
+
+<div class="table-wrap"><table>
+<thead><tr><th>Manager</th><th>Best For</th><th>Model</th></tr></thead>
+<tbody>
+<tr><td>pack</td><td>Simple linear layouts</td><td>Stack top/bottom/left/right</td></tr>
+<tr><td>grid</td><td>Forms, tables</td><td>Row/column spreadsheet</td></tr>
+<tr><td>place</td><td>Absolute positioning</td><td>x/y coords or fractions</td></tr>
+</tbody></table></div>
+<div class="callout warn"><div class="callout-title">⚠️ Never Mix Managers in the Same Container</div><p>Don't use both <code>pack</code> and <code>grid</code> for widgets sharing the same parent — it causes an infinite geometry loop and freeze.</p></div>
+
+<h2>pack()</h2>
+<div class="sig"><span class="name">widget.pack</span>(<span class="arg">side</span>=<span class="default">TOP</span>, <span class="arg">fill</span>=<span class="default">NONE</span>, <span class="arg">expand</span>=<span class="default">False</span>, <span class="arg">anchor</span>=<span class="default">CENTER</span>, <span class="arg">padx</span>=<span class="default">0</span>, <span class="arg">pady</span>=<span class="default">0</span>)</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Values</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>side</td><td>TOP, BOTTOM, LEFT, RIGHT</td><td>Which side to pack against</td></tr>
+<tr><td>fill</td><td>NONE, X, Y, BOTH</td><td>Expand to fill allocated space</td></tr>
+<tr><td>expand</td><td>True / False</td><td>Claim extra space as window grows</td></tr>
+<tr><td>anchor</td><td>N S E W NE NW SE SW CENTER</td><td>Alignment when there's spare space</td></tr>
+<tr><td>padx / pady</td><td>int or (int,int)</td><td>External padding in pixels</td></tr>
+</tbody></table></div>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">sidebar_layout.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>container = ttk.<span class="cls">Frame</span>(root)
+container.<span class="fn">pack</span>(fill=tk.<span class="bi">BOTH</span>, expand=<span class="bi">True</span>)
+
+sidebar = ttk.<span class="cls">Frame</span>(container, width=<span class="num">120</span>)
+sidebar.<span class="fn">pack</span>(side=tk.<span class="bi">LEFT</span>, fill=tk.<span class="bi">Y</span>)
+
+content = ttk.<span class="cls">Frame</span>(container)
+content.<span class="fn">pack</span>(side=tk.<span class="bi">LEFT</span>, fill=tk.<span class="bi">BOTH</span>, expand=<span class="bi">True</span>)</code></pre></div>
+
+<h2>grid()</h2>
+<div class="sig"><span class="name">widget.grid</span>(<span class="arg">row</span>=<span class="default">0</span>, <span class="arg">column</span>=<span class="default">0</span>, <span class="arg">rowspan</span>=<span class="default">1</span>, <span class="arg">columnspan</span>=<span class="default">1</span>, <span class="arg">sticky</span>=<span class="default">""</span>, <span class="arg">padx</span>=<span class="default">0</span>, <span class="arg">pady</span>=<span class="default">0</span>)</div>
+<div class="callout tip"><div class="callout-title">💡 columnconfigure / rowconfigure</div><p>Always call <code>parent.columnconfigure(n, weight=1)</code> on columns that should grow when the window is resized.</p></div>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">grid_form.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>root.<span class="fn">columnconfigure</span>(<span class="num">1</span>, weight=<span class="num">1</span>)
+
+ttk.<span class="cls">Label</span>(root, text=<span class="str">"Username:"</span>).<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">0</span>, sticky=<span class="str">"e"</span>, padx=<span class="num">8</span>, pady=<span class="num">6</span>)
+ttk.<span class="cls">Entry</span>(root).<span class="fn">grid</span>            (row=<span class="num">0</span>, column=<span class="num">1</span>, sticky=<span class="str">"ew"</span>, padx=<span class="num">8</span>)
+
+ttk.<span class="cls">Label</span>(root, text=<span class="str">"Password:"</span>).<span class="fn">grid</span>(row=<span class="num">1</span>, column=<span class="num">0</span>, sticky=<span class="str">"e"</span>, padx=<span class="num">8</span>, pady=<span class="num">6</span>)
+ttk.<span class="cls">Entry</span>(root, show=<span class="str">"*"</span>).<span class="fn">grid</span>     (row=<span class="num">1</span>, column=<span class="num">1</span>, sticky=<span class="str">"ew"</span>, padx=<span class="num">8</span>)
+
+ttk.<span class="cls">Button</span>(root, text=<span class="str">"Login"</span>).<span class="fn">grid</span>(row=<span class="num">2</span>, column=<span class="num">0</span>, columnspan=<span class="num">2</span>, pady=<span class="num">12</span>)</code></pre></div>
+
+<h2>place()</h2>
+<div class="sig"><span class="name">widget.place</span>(<span class="arg">x</span>=<span class="default">0</span>, <span class="arg">y</span>=<span class="default">0</span>, <span class="arg">relx</span>=<span class="default">0.0</span>, <span class="arg">rely</span>=<span class="default">0.0</span>, <span class="arg">width</span>=<span class="default">None</span>, <span class="arg">relwidth</span>=<span class="default">None</span>, <span class="arg">anchor</span>=<span class="default">NW</span>)</div>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">place_center.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="cm"># Center widget using relative coords</span>
+label.<span class="fn">place</span>(relx=<span class="num">0.5</span>, rely=<span class="num">0.5</span>, anchor=tk.<span class="bi">CENTER</span>)</code></pre></div>
+
+<h2>Layout Recipes</h2>
+<h3>App Skeleton (toolbar + content + statusbar)</h3>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">app_skeleton.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>toolbar   = ttk.<span class="cls">Frame</span>(root, relief=<span class="str">"raised"</span>)
+toolbar.<span class="fn">pack</span>(side=<span class="str">"top"</span>, fill=<span class="str">"x"</span>)
+content   = ttk.<span class="cls">Frame</span>(root)
+content.<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="bi">True</span>)
+statusbar = ttk.<span class="cls">Label</span>(root, text=<span class="str">"Ready"</span>, relief=<span class="str">"sunken"</span>)
+statusbar.<span class="fn">pack</span>(side=<span class="str">"bottom"</span>, fill=<span class="str">"x"</span>)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-events">
+
+<div class="page-header"><div class="tag">Core Concepts</div>
+<h1>Events &amp; Bindings<span class="subtitle">Responding to user interaction and system events</span></h1></div>
+
+<h2>bind() Basics</h2>
+<div class="sig"><span class="name">widget.bind</span>(<span class="arg">sequence</span>, <span class="arg">callback</span>, <span class="arg">add</span>=<span class="default">None</span>) <span class="ret">→ funcid</span></div>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">bind_basics.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>label.<span class="fn">bind</span>(<span class="str">"&lt;Button-1&gt;"</span>, <span class="kw">lambda</span> e: <span class="fn">print</span>(<span class="str">f"Click at {e.x},{e.y}"</span>))
+root.<span class="fn">bind</span>(<span class="str">"&lt;Control-s&gt;"</span>, <span class="kw">lambda</span> e: save())
+root.<span class="fn">bind</span>(<span class="str">"&lt;Escape&gt;"</span>,      <span class="kw">lambda</span> e: root.<span class="fn">destroy</span>())</code></pre></div>
+
+<h2>The Event Object</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Attribute</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>widget</td><td>Widget</td><td>The widget that received the event</td></tr>
+<tr><td>x, y</td><td>int</td><td>Mouse position relative to widget</td></tr>
+<tr><td>x_root, y_root</td><td>int</td><td>Mouse position relative to screen</td></tr>
+<tr><td>num</td><td>int</td><td>Mouse button number (1, 2, 3)</td></tr>
+<tr><td>keysym</td><td>str</td><td>Key name (e.g. "Return", "a", "F5")</td></tr>
+<tr><td>char</td><td>str</td><td>Character typed (may be empty)</td></tr>
+<tr><td>state</td><td>int</td><td>Modifier key bitmask (Shift, Ctrl, Alt)</td></tr>
+<tr><td>delta</td><td>int</td><td>Scroll amount (MouseWheel events)</td></tr>
+<tr><td>width, height</td><td>int</td><td>New size (Configure events)</td></tr>
+</tbody></table></div>
+
+<h2>Mouse Events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Sequence</th><th>Fires when…</th></tr></thead>
+<tbody>
+<tr><td>&lt;Button-1&gt;</td><td>Left mouse button pressed</td></tr>
+<tr><td>&lt;Button-3&gt;</td><td>Right mouse button pressed</td></tr>
+<tr><td>&lt;ButtonRelease-1&gt;</td><td>Left button released</td></tr>
+<tr><td>&lt;Double-Button-1&gt;</td><td>Left button double-clicked</td></tr>
+<tr><td>&lt;B1-Motion&gt;</td><td>Mouse moved while left button held</td></tr>
+<tr><td>&lt;Motion&gt;</td><td>Mouse moved (any button or none)</td></tr>
+<tr><td>&lt;Enter&gt; / &lt;Leave&gt;</td><td>Mouse cursor entered/left widget</td></tr>
+<tr><td>&lt;MouseWheel&gt;</td><td>Mouse wheel scrolled (event.delta)</td></tr>
+</tbody></table></div>
+
+<h2>Keyboard Events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Sequence</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>&lt;Key&gt;</td><td>Any key pressed</td></tr>
+<tr><td>&lt;Return&gt;</td><td>Enter key</td></tr>
+<tr><td>&lt;Escape&gt;</td><td>Escape key</td></tr>
+<tr><td>&lt;Tab&gt; / &lt;BackSpace&gt; / &lt;Delete&gt;</td><td>Tab / Backspace / Delete</td></tr>
+<tr><td>&lt;Up&gt; &lt;Down&gt; &lt;Left&gt; &lt;Right&gt;</td><td>Arrow keys</td></tr>
+<tr><td>&lt;F1&gt; … &lt;F12&gt;</td><td>Function keys</td></tr>
+<tr><td>&lt;Control-s&gt;</td><td>Ctrl+S</td></tr>
+<tr><td>&lt;Control-Shift-Z&gt;</td><td>Ctrl+Shift+Z</td></tr>
+</tbody></table></div>
+
+<h2>Virtual Events</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Virtual Event</th><th>When Generated</th></tr></thead>
+<tbody>
+<tr><td>&lt;&lt;Cut&gt;&gt; &lt;&lt;Copy&gt;&gt; &lt;&lt;Paste&gt;&gt;</td><td>Clipboard operations</td></tr>
+<tr><td>&lt;&lt;ComboboxSelected&gt;&gt;</td><td>ttk.Combobox selection changed</td></tr>
+<tr><td>&lt;&lt;NotebookTabChanged&gt;&gt;</td><td>ttk.Notebook tab switched</td></tr>
+<tr><td>&lt;&lt;TreeviewSelect&gt;&gt;</td><td>ttk.Treeview row selected</td></tr>
+<tr><td>&lt;&lt;ListboxSelect&gt;&gt;</td><td>Listbox selection changed</td></tr>
+</tbody></table></div>
+
+<h2>after() — Timers</h2>
+<div class="sig"><span class="name">widget.after</span>(<span class="arg">ms</span>, <span class="arg">func</span>=<span class="default">None</span>, <span class="arg">*args</span>) <span class="ret">→ after_id</span></div>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">countdown.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>count = tk.<span class="cls">IntVar</span>(value=<span class="num">10</span>)
+label = ttk.<span class="cls">Label</span>(root, textvariable=count, font=(<span class="str">"TkDefaultFont"</span>, <span class="num">48</span>))
+label.<span class="fn">pack</span>(padx=<span class="num">40</span>, pady=<span class="num">20</span>)
+
+<span class="kw">def</span> <span class="fn">tick</span>():
+    n = count.<span class="fn">get</span>()
+    <span class="kw">if</span> n > <span class="num">0</span>:
+        count.<span class="fn">set</span>(n - <span class="num">1</span>)
+        root.<span class="fn">after</span>(<span class="num">1000</span>, tick)
+    <span class="kw">else</span>:
+        label.<span class="fn">config</span>(text=<span class="str">"Done!"</span>)
+
+root.<span class="fn">after</span>(<span class="num">1000</span>, tick)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-variables">
+
+<div class="page-header"><div class="tag">Core Concepts</div>
+<h1>Tk Variables<span class="subtitle">Two-way data binding between Python and widgets</span></h1></div>
+
+<h2>Variable Types</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Class</th><th>Holds</th><th>Default</th></tr></thead>
+<tbody>
+<tr><td>StringVar</td><td>str</td><td>""</td></tr>
+<tr><td>IntVar</td><td>int</td><td>0</td></tr>
+<tr><td>DoubleVar</td><td>float</td><td>0.0</td></tr>
+<tr><td>BooleanVar</td><td>bool</td><td>False</td></tr>
+</tbody></table></div>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">variable_binding.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>slider_val = tk.<span class="cls">DoubleVar</span>()
+
+<span class="cm"># Scale widget writes to slider_val</span>
+ttk.<span class="cls">Scale</span>(root, variable=slider_val, from_=<span class="num">0</span>, to=<span class="num">100</span>).<span class="fn">pack</span>(fill=<span class="str">"x"</span>, padx=<span class="num">20</span>)
+
+<span class="cm"># Label automatically shows current value</span>
+ttk.<span class="cls">Label</span>(root, textvariable=slider_val).<span class="fn">pack</span>()
+
+<span class="cm"># Entry also linked — typing moves the slider</span>
+ttk.<span class="cls">Entry</span>(root, textvariable=slider_val).<span class="fn">pack</span>(pady=<span class="num">4</span>)</code></pre></div>
+
+<h2>trace_add() — Watch for Changes</h2>
+<div class="sig"><span class="name">var.trace_add</span>(<span class="arg">mode</span>, <span class="arg">callback</span>) <span class="ret">→ trace_id</span></div>
+<p><code>mode</code> is one of <code>"read"</code>, <code>"write"</code>, or <code>"unset"</code>. The callback receives <em>(name, index, mode)</em>.</p>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">live_search.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>ITEMS = [<span class="str">"apple"</span>, <span class="str">"apricot"</span>, <span class="str">"banana"</span>, <span class="str">"blueberry"</span>, <span class="str">"cherry"</span>]
+query = tk.<span class="cls">StringVar</span>()
+
+ttk.<span class="cls">Entry</span>(root, textvariable=query).<span class="fn">pack</span>(pady=<span class="num">8</span>)
+listbox = tk.<span class="cls">Listbox</span>(root, height=<span class="num">6</span>)
+listbox.<span class="fn">pack</span>(pady=<span class="num">4</span>)
+
+<span class="kw">def</span> <span class="fn">filter_items</span>(*_):
+    q = query.<span class="fn">get</span>().<span class="fn">lower</span>()
+    listbox.<span class="fn">delete</span>(<span class="num">0</span>, tk.<span class="bi">END</span>)
+    <span class="kw">for</span> item <span class="kw">in</span> ITEMS:
+        <span class="kw">if</span> q <span class="kw">in</span> item:
+            listbox.<span class="fn">insert</span>(tk.<span class="bi">END</span>, item)
+
+query.<span class="fn">trace_add</span>(<span class="str">"write"</span>, filter_items)
+filter_items()</code></pre></div>
+
+<h2>Widget-Variable Links</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Widget</th><th>Option</th><th>Variable Type</th></tr></thead>
+<tbody>
+<tr><td>Entry, Label, Button</td><td>textvariable=</td><td>StringVar</td></tr>
+<tr><td>Checkbutton</td><td>variable=</td><td>BooleanVar or IntVar</td></tr>
+<tr><td>Radiobutton</td><td>variable=</td><td>StringVar or IntVar</td></tr>
+<tr><td>Scale</td><td>variable=</td><td>IntVar or DoubleVar</td></tr>
+<tr><td>Spinbox / Combobox</td><td>textvariable=</td><td>StringVar</td></tr>
+</tbody></table></div>
+
+</div>
+
+<div class="page-section" id="page-w-label">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Label<span class="subtitle">Displaying text, numbers, and images</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Label</span><span class="tag-teal">ttk.Label</span></div>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">label_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>ttk.<span class="cls">Label</span>(root, text=<span class="str">"Hello, World!"</span>).<span class="fn">pack</span>(pady=<span class="num">8</span>)
+
+tk.<span class="cls">Label</span>(root,
+    text=<span class="str">"Styled"</span>, font=(<span class="str">"Helvetica"</span>, <span class="num">16</span>, <span class="str">"bold"</span>),
+    fg=<span class="str">"white"</span>, bg=<span class="str">"navy"</span>, padx=<span class="num">12</span>, pady=<span class="num">6</span>).<span class="fn">pack</span>(pady=<span class="num">8</span>)
+
+<span class="cm"># Live clock with textvariable</span>
+time_var = tk.<span class="cls">StringVar</span>()
+ttk.<span class="cls">Label</span>(root, textvariable=time_var, font=(<span class="str">"TkFixedFont"</span>, <span class="num">24</span>)).<span class="fn">pack</span>(pady=<span class="num">20</span>)
+
+<span class="kw">def</span> <span class="fn">tick</span>():
+    <span class="kw">from</span> datetime <span class="kw">import</span> datetime
+    time_var.<span class="fn">set</span>(datetime.<span class="fn">now</span>().<span class="fn">strftime</span>(<span class="str">"%H:%M:%S"</span>))
+    root.<span class="fn">after</span>(<span class="num">1000</span>, tick)
+tick()</code></pre></div>
+
+<h2>Key Options</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>text</td><td>The string to display</td></tr>
+<tr><td>textvariable</td><td>StringVar — live updates</td></tr>
+<tr><td>image</td><td>PhotoImage to display</td></tr>
+<tr><td>compound</td><td>LEFT/RIGHT/TOP/BOTTOM — image + text arrangement</td></tr>
+<tr><td>font</td><td>Font tuple: ("family", size, "bold italic")</td></tr>
+<tr><td>fg / bg</td><td>Text/background color (tk only)</td></tr>
+<tr><td>anchor</td><td>N/S/E/W/CENTER — alignment</td></tr>
+<tr><td>wraplength</td><td>Wrap text at this pixel width</td></tr>
+<tr><td>justify</td><td>LEFT/RIGHT/CENTER for multi-line text</td></tr>
+<tr><td>relief / bd</td><td>Border style and width</td></tr>
+</tbody></table></div>
+
+<div class="callout warn"><div class="callout-title">⚠️ Image References</div><p>Always store <code>PhotoImage</code> objects as instance attributes (<code>self.img = ...</code> or <code>label.image = ...</code>). Python garbage-collects unreferenced images and the widget goes blank.</p></div>
+
+</div>
+
+<div class="page-section" id="page-w-button">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Button<span class="subtitle">Clickable actions and command triggers</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Button</span><span class="tag-teal">ttk.Button</span></div>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">button_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>ttk.<span class="cls">Button</span>(root, text=<span class="str">"Click Me"</span>, command=on_click).<span class="fn">pack</span>(pady=<span class="num">8</span>)
+
+<span class="cm"># Loading state pattern</span>
+<span class="kw">def</span> <span class="fn">on_submit</span>():
+    btn.<span class="fn">state</span>([<span class="str">"disabled"</span>])
+    btn.<span class="fn">config</span>(text=<span class="str">"Working…"</span>)
+    <span class="kw">def</span> <span class="fn">done</span>():
+        btn.<span class="fn">config</span>(text=<span class="str">"Submit"</span>)
+        btn.<span class="fn">state</span>([<span class="str">"!disabled"</span>])
+    root.<span class="fn">after</span>(<span class="num">2000</span>, done)   <span class="cm"># simulate work</span>
+
+btn = ttk.<span class="cls">Button</span>(root, text=<span class="str">"Submit"</span>, command=on_submit)
+btn.<span class="fn">pack</span>(pady=<span class="num">12</span>)</code></pre></div>
+
+<h2>Key Options</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>text</td><td>Button label text</td></tr>
+<tr><td>command</td><td>Function called on click (no arguments passed)</td></tr>
+<tr><td>textvariable</td><td>StringVar providing the label</td></tr>
+<tr><td>image / compound</td><td>Image and text arrangement</td></tr>
+<tr><td>state</td><td>normal/active/disabled (tk); use state() for ttk</td></tr>
+<tr><td>width</td><td>Width in characters</td></tr>
+</tbody></table></div>
+
+<h2>Methods</h2>
+<div class="sig"><span class="name">button.invoke</span>() — Simulate a button click programmatically</div>
+<div class="sig"><span class="name">button.state</span>([<span class="arg">"disabled"</span>]) — ttk state flags</div>
+<div class="sig"><span class="name">button.state</span>([<span class="arg">"!disabled"</span>]) — ttk remove flag (prefix with !)</div>
+
+</div>
+
+<div class="page-section" id="page-w-entry">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Entry<span class="subtitle">Single-line text input with validation</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Entry</span><span class="tag-teal">ttk.Entry</span></div>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">entry_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>username = tk.<span class="cls">StringVar</span>()
+entry = ttk.<span class="cls">Entry</span>(root, textvariable=username, width=<span class="num">30</span>)
+entry.<span class="fn">pack</span>(pady=<span class="num">8</span>)
+entry.<span class="fn">focus_set</span>()   <span class="cm"># give keyboard focus</span>
+
+<span class="cm"># Methods</span>
+entry.<span class="fn">insert</span>(<span class="num">0</span>, <span class="str">"Hello"</span>)     <span class="cm"># insert at start</span>
+entry.<span class="fn">insert</span>(tk.<span class="bi">END</span>, <span class="str">" World"</span>) <span class="cm"># append</span>
+value = entry.<span class="fn">get</span>()             <span class="cm"># "Hello World"</span>
+entry.<span class="fn">delete</span>(<span class="num">0</span>, tk.<span class="bi">END</span>)         <span class="cm"># clear</span></code></pre></div>
+
+<h2>Validation — Integers Only</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">validate_int.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">def</span> <span class="fn">only_integers</span>(new_value):
+    <span class="kw">return</span> new_value == <span class="str">""</span> <span class="kw">or</span> new_value.<span class="fn">lstrip</span>(<span class="str">"-"</span>).<span class="fn">isdigit</span>()
+
+vcmd = root.<span class="fn">register</span>(only_integers)
+ttk.<span class="cls">Entry</span>(root,
+    validate=<span class="str">"key"</span>,
+    validatecommand=(vcmd, <span class="str">"%P"</span>)).<span class="fn">pack</span>(padx=<span class="num">20</span>, pady=<span class="num">20</span>)</code></pre></div>
+
+<h2>Validation Substitutions</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Code</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>%P</td><td>Proposed value if change is allowed</td></tr>
+<tr><td>%s</td><td>Current value before the change</td></tr>
+<tr><td>%S</td><td>Text being inserted or deleted</td></tr>
+<tr><td>%d</td><td>Action: 1=insert, 0=delete, -1=other</td></tr>
+<tr><td>%i</td><td>Index of the change</td></tr>
+<tr><td>%V</td><td>Trigger: key / focusin / focusout / forced</td></tr>
+</tbody></table></div>
+
+<h2>Password Field</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">password.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>pw = tk.<span class="cls">StringVar</span>()
+show = tk.<span class="cls">BooleanVar</span>(value=<span class="bi">False</span>)
+pw_entry = ttk.<span class="cls">Entry</span>(root, textvariable=pw, show=<span class="str">"●"</span>)
+pw_entry.<span class="fn">pack</span>(pady=<span class="num">8</span>)
+
+ttk.<span class="cls">Checkbutton</span>(root, text=<span class="str">"Show"</span>, variable=show,
+    command=<span class="kw">lambda</span>: pw_entry.<span class="fn">config</span>(show=<span class="str">""</span> <span class="kw">if</span> show.<span class="fn">get</span>() <span class="kw">else</span> <span class="str">"●"</span>)).<span class="fn">pack</span>()</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-w-text">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Text<span class="subtitle">Multi-line rich text editor with tags, marks, and images</span></h1></div>
+<span class="tag-amber">tk.Text</span>
+
+<h2>Basic Usage</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">text_basic.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>text = tk.<span class="cls">Text</span>(root, width=<span class="num">50</span>, height=<span class="num">10</span>, wrap=tk.<span class="bi">WORD</span>, undo=<span class="bi">True</span>)
+text.<span class="fn">pack</span>(padx=<span class="num">8</span>, pady=<span class="num">8</span>)
+text.<span class="fn">insert</span>(<span class="str">"1.0"</span>, <span class="str">"Hello, World!
+Second line."</span>)
+content = text.<span class="fn">get</span>(<span class="str">"1.0"</span>, tk.<span class="bi">END</span>).<span class="fn">rstrip</span>(<span class="str">"\n"</span>)</code></pre></div>
+
+<h2>Index Notation</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Index</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>"1.0"</td><td>Line 1, column 0 (the very beginning)</td></tr>
+<tr><td>"2.5"</td><td>Line 2, column 5</td></tr>
+<tr><td>"end" or tk.END</td><td>One past the last character</td></tr>
+<tr><td>"insert"</td><td>Current insertion cursor</td></tr>
+<tr><td>"sel.first" / "sel.last"</td><td>Start/end of selection</td></tr>
+<tr><td>"1.0 lineend"</td><td>End of line 1</td></tr>
+<tr><td>"1.0 + 3c"</td><td>3 characters after 1.0</td></tr>
+</tbody></table></div>
+
+<h2>Tags (Formatting)</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">text_tags.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>text.<span class="fn">tag_configure</span>(<span class="str">"bold"</span>,     font=(<span class="str">"TkDefaultFont"</span>, <span class="num">11</span>, <span class="str">"bold"</span>))
+text.<span class="fn">tag_configure</span>(<span class="str">"red"</span>,      foreground=<span class="str">"red"</span>)
+text.<span class="fn">tag_configure</span>(<span class="str">"highlight"</span>,background=<span class="str">"yellow"</span>)
+text.<span class="fn">tag_configure</span>(<span class="str">"link"</span>,     foreground=<span class="str">"blue"</span>, underline=<span class="bi">True</span>)
+
+text.<span class="fn">insert</span>(tk.<span class="bi">END</span>, <span class="str">"Bold text"</span>, <span class="str">"bold"</span>)
+text.<span class="fn">tag_bind</span>(<span class="str">"link"</span>, <span class="str">"&lt;Button-1&gt;"</span>, <span class="kw">lambda</span> e: <span class="fn">print</span>(<span class="str">"clicked!"</span>))</code></pre></div>
+
+<h2>Scrolled Text</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">scrolled_text.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>frame = ttk.<span class="cls">Frame</span>(root)
+frame.<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="bi">True</span>)
+frame.<span class="fn">rowconfigure</span>(<span class="num">0</span>, weight=<span class="num">1</span>); frame.<span class="fn">columnconfigure</span>(<span class="num">0</span>, weight=<span class="num">1</span>)
+
+text = tk.<span class="cls">Text</span>(frame, wrap=tk.<span class="bi">WORD</span>)
+sb   = ttk.<span class="cls">Scrollbar</span>(frame, orient=<span class="str">"vertical"</span>, command=text.<span class="fn">yview</span>)
+text.configure(yscrollcommand=sb.<span class="fn">set</span>)
+text.<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">0</span>, sticky=<span class="str">"nsew"</span>)
+sb.<span class="fn">grid</span>  (row=<span class="num">0</span>, column=<span class="num">1</span>, sticky=<span class="str">"ns"</span>)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-w-frame">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Frame &amp; LabelFrame<span class="subtitle">Containers for grouping widgets</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Frame</span><span class="tag-teal">ttk.Frame</span><span class="tag-violet">tk.LabelFrame</span><span class="tag-teal">ttk.LabelFrame</span></div>
+
+<h2>Frame — Layout Container</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">frame_layout.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>root.<span class="fn">rowconfigure</span>(<span class="num">0</span>, weight=<span class="num">1</span>); root.<span class="fn">columnconfigure</span>(<span class="num">0</span>, weight=<span class="num">1</span>)
+main = ttk.<span class="cls">Frame</span>(root); main.<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">0</span>, sticky=<span class="str">"nsew"</span>)
+main.<span class="fn">rowconfigure</span>(<span class="num">1</span>, weight=<span class="num">1</span>); main.<span class="fn">columnconfigure</span>(<span class="num">1</span>, weight=<span class="num">1</span>)
+
+header  = ttk.<span class="cls">Frame</span>(main, height=<span class="num">48</span>)
+sidebar = ttk.<span class="cls">Frame</span>(main, width=<span class="num">200</span>)
+content = ttk.<span class="cls">Frame</span>(main)
+
+header.<span class="fn">grid</span> (row=<span class="num">0</span>, column=<span class="num">0</span>, columnspan=<span class="num">2</span>, sticky=<span class="str">"ew"</span>)
+sidebar.<span class="fn">grid</span>(row=<span class="num">1</span>, column=<span class="num">0</span>, sticky=<span class="str">"ns"</span>)
+content.<span class="fn">grid</span>(row=<span class="num">1</span>, column=<span class="num">1</span>, sticky=<span class="str">"nsew"</span>)
+sidebar.<span class="fn">grid_propagate</span>(<span class="bi">False</span>)  <span class="cm"># freeze sidebar width</span></code></pre></div>
+
+<h2>LabelFrame — Grouped Controls</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">labelframe.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>group = ttk.<span class="cls">LabelFrame</span>(root, text=<span class="str">"Connection Settings"</span>, padding=<span class="num">12</span>)
+group.<span class="fn">pack</span>(padx=<span class="num">16</span>, pady=<span class="num">16</span>, fill=<span class="str">"x"</span>)
+group.<span class="fn">columnconfigure</span>(<span class="num">1</span>, weight=<span class="num">1</span>)
+
+ttk.<span class="cls">Label</span>(group, text=<span class="str">"Host:"</span>).<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">0</span>, sticky=<span class="str">"e"</span>)
+ttk.<span class="cls">Entry</span>(group).<span class="fn">grid</span>            (row=<span class="num">0</span>, column=<span class="num">1</span>, sticky=<span class="str">"ew"</span>, padx=<span class="num">4</span>)
+ttk.<span class="cls">Label</span>(group, text=<span class="str">"Port:"</span>).<span class="fn">grid</span>(row=<span class="num">1</span>, column=<span class="num">0</span>, sticky=<span class="str">"e"</span>)
+ttk.<span class="cls">Entry</span>(group, width=<span class="num">8</span>).<span class="fn">grid</span>  (row=<span class="num">1</span>, column=<span class="num">1</span>, sticky=<span class="str">"w"</span>,  padx=<span class="num">4</span>)</code></pre></div>
+
+<h2>pack_propagate</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">fixed_size_frame.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>sidebar = ttk.<span class="cls">Frame</span>(root, width=<span class="num">200</span>)
+sidebar.<span class="fn">pack_propagate</span>(<span class="bi">False</span>)  <span class="cm"># don't shrink to children</span>
+sidebar.<span class="fn">pack</span>(side=<span class="str">"left"</span>, fill=<span class="str">"y"</span>)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-w-canvas">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Canvas<span class="subtitle">2D drawing surface for shapes, images, and custom widgets</span></h1></div>
+<span class="tag-amber">tk.Canvas</span>
+
+<h2>Drawing Methods</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">canvas_shapes.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>canvas = tk.<span class="cls">Canvas</span>(root, width=<span class="num">400</span>, height=<span class="num">300</span>, bg=<span class="str">"white"</span>, highlightthickness=<span class="num">0</span>)
+canvas.<span class="fn">pack</span>()
+
+rect = canvas.<span class="fn">create_rectangle</span>(<span class="num">50</span>, <span class="num">50</span>, <span class="num">150</span>, <span class="num">100</span>, fill=<span class="str">"skyblue"</span>, outline=<span class="str">"navy"</span>)
+oval = canvas.<span class="fn">create_oval</span>      (<span class="num">200</span>, <span class="num">50</span>, <span class="num">300</span>, <span class="num">150</span>, fill=<span class="str">"tomato"</span>)
+line = canvas.<span class="fn">create_line</span>      (<span class="num">0</span>, <span class="num">200</span>, <span class="num">400</span>, <span class="num">200</span>, fill=<span class="str">"gray"</span>, dash=(<span class="num">4</span>, <span class="num">2</span>))
+text = canvas.<span class="fn">create_text</span>      (<span class="num">200</span>, <span class="num">250</span>, text=<span class="str">"Hello Canvas"</span>, font=(<span class="str">"Arial"</span>, <span class="num">14</span>))</code></pre></div>
+
+<h2>All Draw Methods</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Method</th><th>Key Options</th></tr></thead>
+<tbody>
+<tr><td>create_rectangle(x1,y1,x2,y2)</td><td>fill, outline, width</td></tr>
+<tr><td>create_oval(x1,y1,x2,y2)</td><td>fill, outline</td></tr>
+<tr><td>create_line(x1,y1,x2,y2,...)</td><td>fill, width, dash, arrow, smooth</td></tr>
+<tr><td>create_polygon(x1,y1,...)</td><td>fill, outline, smooth</td></tr>
+<tr><td>create_arc(x1,y1,x2,y2)</td><td>start, extent, style (ARC/CHORD/PIESLICE)</td></tr>
+<tr><td>create_text(x,y)</td><td>text, font, fill, anchor, justify</td></tr>
+<tr><td>create_image(x,y)</td><td>image (PhotoImage), anchor</td></tr>
+<tr><td>create_window(x,y)</td><td>window (any widget!), anchor</td></tr>
+</tbody></table></div>
+
+<h2>Modifying Items</h2>
+<div class="sig"><span class="name">canvas.itemconfig</span>(<span class="arg">item_id_or_tag</span>, <span class="arg">**options</span>)</div>
+<div class="sig"><span class="name">canvas.move</span>(<span class="arg">item</span>, <span class="arg">dx</span>, <span class="arg">dy</span>)</div>
+<div class="sig"><span class="name">canvas.coords</span>(<span class="arg">item</span>, <span class="arg">*new_coords</span>) <span class="ret">→ list</span></div>
+<div class="sig"><span class="name">canvas.delete</span>(<span class="arg">item_or_tag</span>)</div>
+<div class="sig"><span class="name">canvas.lift</span>(<span class="arg">item</span>) / <span class="name">canvas.lower</span>(<span class="arg">item</span>)</div>
+
+<h2>Draggable Shapes</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">drag_shapes.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>canvas.<span class="fn">create_oval</span>(<span class="num">40</span>,<span class="num">40</span>,<span class="num">100</span>,<span class="num">100</span>, fill=<span class="str">"dodgerblue"</span>, tags=<span class="str">"drag"</span>)
+_d = {<span class="str">"x"</span>:<span class="num">0</span>,<span class="str">"y"</span>:<span class="num">0</span>,<span class="str">"item"</span>:<span class="bi">None</span>}
+
+<span class="kw">def</span> <span class="fn">start</span>(e):
+    _d[<span class="str">"item"</span>] = canvas.<span class="fn">find_closest</span>(e.x, e.y)[<span class="num">0</span>]
+    _d[<span class="str">"x"</span>], _d[<span class="str">"y"</span>] = e.x, e.y
+
+<span class="kw">def</span> <span class="fn">drag</span>(e):
+    canvas.<span class="fn">move</span>(_d[<span class="str">"item"</span>], e.x-_d[<span class="str">"x"</span>], e.y-_d[<span class="str">"y"</span>])
+    _d[<span class="str">"x"</span>], _d[<span class="str">"y"</span>] = e.x, e.y
+
+canvas.<span class="fn">tag_bind</span>(<span class="str">"drag"</span>, <span class="str">"&lt;Button-1&gt;"</span>, start)
+canvas.<span class="fn">tag_bind</span>(<span class="str">"drag"</span>, <span class="str">"&lt;B1-Motion&gt;"</span>, drag)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-w-listbox">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Listbox<span class="subtitle">Scrollable list of selectable items</span></h1></div>
+<span class="tag-amber">tk.Listbox</span>
+
+<h2>Basic Usage</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">listbox_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>lb = tk.<span class="cls">Listbox</span>(root, height=<span class="num">6</span>, selectmode=tk.<span class="bi">EXTENDED</span>)
+lb.<span class="fn">pack</span>(padx=<span class="num">10</span>, pady=<span class="num">10</span>)
+
+<span class="kw">for</span> fruit <span class="kw">in</span> [<span class="str">"Apple"</span>, <span class="str">"Banana"</span>, <span class="str">"Cherry"</span>, <span class="str">"Durian"</span>]:
+    lb.<span class="fn">insert</span>(tk.<span class="bi">END</span>, fruit)
+
+lb.<span class="fn">bind</span>(<span class="str">"&lt;&lt;ListboxSelect&gt;&gt;"</span>,
+    <span class="kw">lambda</span> e: <span class="fn">print</span>([lb.<span class="fn">get</span>(i) <span class="kw">for</span> i <span class="kw">in</span> lb.<span class="fn">curselection</span>()]))</code></pre></div>
+
+<h2>Selection Modes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Mode</th><th>Behavior</th></tr></thead>
+<tbody>
+<tr><td>BROWSE</td><td>Single selection; click drags (default)</td></tr>
+<tr><td>SINGLE</td><td>Single selection; no drag</td></tr>
+<tr><td>MULTIPLE</td><td>Toggle multiple with click</td></tr>
+<tr><td>EXTENDED</td><td>Range select with Shift+click, Ctrl+click</td></tr>
+</tbody></table></div>
+
+<h2>Key Methods</h2>
+<div class="sig"><span class="name">lb.insert</span>(<span class="arg">index</span>, <span class="arg">*elements</span>) — Add items (END, 0, or int)</div>
+<div class="sig"><span class="name">lb.delete</span>(<span class="arg">first</span>, <span class="arg">last</span>=<span class="default">None</span>)</div>
+<div class="sig"><span class="name">lb.get</span>(<span class="arg">first</span>, <span class="arg">last</span>=<span class="default">None</span>) <span class="ret">→ str or tuple</span></div>
+<div class="sig"><span class="name">lb.curselection</span>() <span class="ret">→ tuple of ints</span></div>
+<div class="sig"><span class="name">lb.selection_set</span>(<span class="arg">first</span>, <span class="arg">last</span>=<span class="default">None</span>)</div>
+<div class="sig"><span class="name">lb.size</span>() <span class="ret">→ int</span></div>
+<div class="sig"><span class="name">lb.see</span>(<span class="arg">index</span>) — Scroll to make item visible</div>
+<div class="sig"><span class="name">lb.itemconfig</span>(<span class="arg">index</span>, <span class="arg">fg=</span>, <span class="arg">bg=</span>) — Color individual items</div>
+
+</div>
+
+<div class="page-section" id="page-w-scrollbar">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Scrollbar<span class="subtitle">The two-way link pattern</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Scrollbar</span><span class="tag-teal">ttk.Scrollbar</span></div>
+
+<p>Scrollbars link to a scrollable widget through a <strong>two-way command interface</strong>.</p>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">scrollbar_link.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>text = tk.<span class="cls">Text</span>(frame, wrap=<span class="str">"word"</span>)
+vbar = ttk.<span class="cls">Scrollbar</span>(frame, orient=<span class="str">"vertical"</span>)
+
+<span class="cm"># TWO-WAY link</span>
+text.configure(yscrollcommand=vbar.<span class="fn">set</span>)  <span class="cm"># widget tells scrollbar position</span>
+vbar.configure(command=text.<span class="fn">yview</span>)       <span class="cm"># scrollbar tells widget to scroll</span>
+
+text.<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">0</span>, sticky=<span class="str">"nsew"</span>)
+vbar.<span class="fn">grid</span>(row=<span class="num">0</span>, column=<span class="num">1</span>, sticky=<span class="str">"ns"</span>)
+frame.<span class="fn">rowconfigure</span>(<span class="num">0</span>, weight=<span class="num">1</span>); frame.<span class="fn">columnconfigure</span>(<span class="num">0</span>, weight=<span class="num">1</span>)</code></pre></div>
+
+<p><strong>Compatible widgets:</strong> <span class="tag-amber">Text</span> <span class="tag-amber">Canvas</span> <span class="tag-amber">Listbox</span> <span class="tag-amber">Entry</span> <span class="tag-teal">ttk.Treeview</span></p>
+
+</div>
+
+<div class="page-section" id="page-w-checkbutton">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Checkbutton<span class="subtitle">On/off toggle with BooleanVar</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Checkbutton</span><span class="tag-teal">ttk.Checkbutton</span></div>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">checkbutton.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>notifications = tk.<span class="cls">BooleanVar</span>(value=<span class="bi">True</span>)
+dark_mode     = tk.<span class="cls">BooleanVar</span>(value=<span class="bi">False</span>)
+
+ttk.<span class="cls">Checkbutton</span>(root, text=<span class="str">"Enable notifications"</span>,
+    variable=notifications).<span class="fn">pack</span>(anchor=<span class="str">"w"</span>, padx=<span class="num">12</span>, pady=<span class="num">4</span>)
+ttk.<span class="cls">Checkbutton</span>(root, text=<span class="str">"Dark mode"</span>,
+    variable=dark_mode,
+    command=<span class="kw">lambda</span>: <span class="fn">print</span>(<span class="str">"Dark:"</span>, dark_mode.<span class="fn">get</span>())).<span class="fn">pack</span>(anchor=<span class="str">"w"</span>, padx=<span class="num">12</span>)
+ttk.<span class="cls">Button</span>(root, text=<span class="str">"Show values"</span>,
+    command=<span class="kw">lambda</span>: <span class="fn">print</span>(notifications.<span class="fn">get</span>(), dark_mode.<span class="fn">get</span>())).<span class="fn">pack</span>(pady=<span class="num">8</span>)</code></pre></div>
+
+<h2>Key Options</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>variable</td><td>BooleanVar (or IntVar) tracking state</td></tr>
+<tr><td>onvalue / offvalue</td><td>Values for checked/unchecked (default True/False)</td></tr>
+<tr><td>command</td><td>Callback on toggle</td></tr>
+<tr><td>text / textvariable</td><td>Label text</td></tr>
+</tbody></table></div>
+
+</div>
+
+<div class="page-section" id="page-w-radiobutton">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Radiobutton<span class="subtitle">Mutually exclusive choices</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Radiobutton</span><span class="tag-teal">ttk.Radiobutton</span></div>
+
+<p>All Radiobuttons sharing the same <code>variable</code> form a group — only one selectable at a time.</p>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">radiobutton.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>size = tk.<span class="cls">StringVar</span>(value=<span class="str">"M"</span>)
+
+<span class="kw">for</span> label, value <span class="kw">in</span> [(<span class="str">"Small"</span>,<span class="str">"S"</span>),(<span class="str">"Medium"</span>,<span class="str">"M"</span>),(<span class="str">"Large"</span>,<span class="str">"L"</span>)]:
+    ttk.<span class="cls">Radiobutton</span>(root, text=label, variable=size, value=value).<span class="fn">pack</span>(anchor=<span class="str">"w"</span>, padx=<span class="num">20</span>)
+
+ttk.<span class="cls">Button</span>(root, text=<span class="str">"Show"</span>,
+    command=<span class="kw">lambda</span>: <span class="fn">print</span>(<span class="str">"Size:"</span>, size.<span class="fn">get</span>())).<span class="fn">pack</span>(pady=<span class="num">8</span>)</code></pre></div>
+
+<h2>Key Options</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>variable</td><td>StringVar or IntVar shared by the group</td></tr>
+<tr><td>value</td><td>The value this button sets when selected</td></tr>
+<tr><td>command</td><td>Callback when this button is selected</td></tr>
+<tr><td>indicatoron</td><td>0 = button-style (no radio dot) — tk only</td></tr>
+</tbody></table></div>
+
+</div>
+
+<div class="page-section" id="page-w-scale">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Scale<span class="subtitle">Slider for numeric values</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Scale</span><span class="tag-teal">ttk.Scale</span></div>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">rgb_mixer.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>r, g, b = tk.<span class="cls">IntVar</span>(), tk.<span class="cls">IntVar</span>(), tk.<span class="cls">IntVar</span>()
+preview = tk.<span class="cls">Label</span>(root, width=<span class="num">20</span>, height=<span class="num">3</span>)
+preview.<span class="fn">pack</span>(pady=<span class="num">8</span>)
+
+<span class="kw">def</span> <span class="fn">update</span>(*_):
+    preview.<span class="fn">config</span>(bg=<span class="str">f"#{r.get():02x}{g.get():02x}{b.get():02x}"</span>)
+
+<span class="kw">for</span> label, var, fg <span class="kw">in</span> [(<span class="str">"R"</span>,r,<span class="str">"red"</span>),(<span class="str">"G"</span>,g,<span class="str">"green"</span>),(<span class="str">"B"</span>,b,<span class="str">"blue"</span>)]:
+    f = tk.<span class="cls">Frame</span>(root)
+    f.<span class="fn">pack</span>(fill=<span class="str">"x"</span>, padx=<span class="num">10</span>)
+    tk.<span class="cls">Label</span>(f, text=label, fg=fg, width=<span class="num">2</span>).<span class="fn">pack</span>(side=<span class="str">"left"</span>)
+    tk.<span class="cls">Scale</span>(f, variable=var, from_=<span class="num">0</span>, to=<span class="num">255</span>,
+             orient=<span class="str">"horizontal"</span>, command=update,
+             showvalue=<span class="bi">False</span>).<span class="fn">pack</span>(side=<span class="str">"left"</span>, fill=<span class="str">"x"</span>, expand=<span class="bi">True</span>)</code></pre></div>
+
+<h2>Key Options</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>from_ / to</td><td>Min/max value (from_ has trailing underscore — "from" is a keyword)</td></tr>
+<tr><td>orient</td><td>HORIZONTAL or VERTICAL</td></tr>
+<tr><td>variable</td><td>IntVar or DoubleVar</td></tr>
+<tr><td>resolution</td><td>Snap increment</td></tr>
+<tr><td>tickinterval</td><td>Spacing between tick labels (tk only)</td></tr>
+<tr><td>command</td><td>Callback called with new value string</td></tr>
+</tbody></table></div>
+
+</div>
+
+<div class="page-section" id="page-w-spinbox">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Spinbox<span class="subtitle">Numeric or value list spinner</span></h1></div>
+<div class="flex"><span class="tag-amber">tk.Spinbox</span><span class="tag-teal">ttk.Spinbox</span></div>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">spinbox_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>quantity = tk.<span class="cls">IntVar</span>(value=<span class="num">1</span>)
+ttk.<span class="cls">Spinbox</span>(root, from_=<span class="num">1</span>, to=<span class="num">99</span>, textvariable=quantity, width=<span class="num">6</span>).<span class="fn">pack</span>(pady=<span class="num">8</span>)
+
+day = tk.<span class="cls">StringVar</span>(value=<span class="str">"Monday"</span>)
+ttk.<span class="cls">Spinbox</span>(root,
+    values=(<span class="str">"Monday"</span>,<span class="str">"Tuesday"</span>,<span class="str">"Wednesday"</span>,<span class="str">"Thursday"</span>,<span class="str">"Friday"</span>),
+    textvariable=day, width=<span class="num">12</span>, state=<span class="str">"readonly"</span>).<span class="fn">pack</span>(pady=<span class="num">4</span>)</code></pre></div>
+
+<h2>Key Options</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>from_ / to / increment</td><td>Numeric range and step</td></tr>
+<tr><td>values</td><td>Tuple of strings to cycle through</td></tr>
+<tr><td>wrap</td><td>True = cycle back to start/end</td></tr>
+<tr><td>format</td><td>printf-style format, e.g. "%.2f"</td></tr>
+<tr><td>state</td><td>normal / readonly / disabled</td></tr>
+</tbody></table></div>
+
+</div>
+
+<div class="page-section" id="page-w-menu">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Menu<span class="subtitle">Menu bars, dropdown menus, and context menus</span></h1></div>
+<span class="tag-amber">tk.Menu</span>
+
+<h2>Menu Bar</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">menubar.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>menubar = tk.<span class="cls">Menu</span>(root)
+root.<span class="fn">config</span>(menu=menubar)
+
+file_menu = tk.<span class="cls">Menu</span>(menubar, tearoff=<span class="num">0</span>)
+menubar.<span class="fn">add_cascade</span>(label=<span class="str">"File"</span>, menu=file_menu)
+
+file_menu.<span class="fn">add_command</span>  (label=<span class="str">"New"</span>,  command=new_file,  accelerator=<span class="str">"Ctrl+N"</span>)
+file_menu.<span class="fn">add_command</span>  (label=<span class="str">"Open…"</span>, command=open_file, accelerator=<span class="str">"Ctrl+O"</span>)
+file_menu.<span class="fn">add_separator</span>()
+file_menu.<span class="fn">add_command</span>  (label=<span class="str">"Exit"</span>,  command=root.<span class="fn">destroy</span>)
+
+edit_menu = tk.<span class="cls">Menu</span>(menubar, tearoff=<span class="num">0</span>)
+menubar.<span class="fn">add_cascade</span>(label=<span class="str">"Edit"</span>, menu=edit_menu)
+word_wrap = tk.<span class="cls">BooleanVar</span>(value=<span class="bi">True</span>)
+edit_menu.<span class="fn">add_checkbutton</span>(label=<span class="str">"Word Wrap"</span>, variable=word_wrap)</code></pre></div>
+
+<h2>Context Menu</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">context_menu.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>ctx = tk.<span class="cls">Menu</span>(root, tearoff=<span class="num">0</span>)
+ctx.<span class="fn">add_command</span>(label=<span class="str">"Cut"</span>,   command=<span class="kw">lambda</span>: text.<span class="fn">event_generate</span>(<span class="str">"&lt;&lt;Cut&gt;&gt;"</span>))
+ctx.<span class="fn">add_command</span>(label=<span class="str">"Copy"</span>,  command=<span class="kw">lambda</span>: text.<span class="fn">event_generate</span>(<span class="str">"&lt;&lt;Copy&gt;&gt;"</span>))
+ctx.<span class="fn">add_command</span>(label=<span class="str">"Paste"</span>, command=<span class="kw">lambda</span>: text.<span class="fn">event_generate</span>(<span class="str">"&lt;&lt;Paste&gt;&gt;"</span>))
+
+text.<span class="fn">bind</span>(<span class="str">"&lt;Button-3&gt;"</span>, <span class="kw">lambda</span> e: ctx.<span class="fn">tk_popup</span>(e.x_root, e.y_root))</code></pre></div>
+
+<h2>Item Types</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Method</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>add_command()</td><td>Normal clickable item</td></tr>
+<tr><td>add_separator()</td><td>Horizontal line</td></tr>
+<tr><td>add_checkbutton()</td><td>Toggle item with variable=</td></tr>
+<tr><td>add_radiobutton()</td><td>Radio item with variable= and value=</td></tr>
+<tr><td>add_cascade()</td><td>Submenu (menu= another Menu)</td></tr>
+</tbody></table></div>
+
+</div>
+
+<div class="page-section" id="page-w-toplevel">
+
+<div class="page-header"><div class="tag">Classic Widget</div>
+<h1>Toplevel<span class="subtitle">Secondary windows and modal dialogs</span></h1></div>
+<span class="tag-amber">tk.Toplevel</span>
+
+<h2>Basic Window</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">toplevel.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">def</span> <span class="fn">open_window</span>():
+    win = tk.<span class="cls">Toplevel</span>(root)
+    win.<span class="fn">title</span>(<span class="str">"Secondary Window"</span>)
+    win.<span class="fn">geometry</span>(<span class="str">"300x200"</span>)
+    ttk.<span class="cls">Button</span>(win, text=<span class="str">"Close"</span>, command=win.<span class="fn">destroy</span>).<span class="fn">pack</span>(pady=<span class="num">20</span>)</code></pre></div>
+
+<h2>Modal Dialog Pattern</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">modal_dialog.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">class</span> <span class="cls">AskNameDialog</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, parent):
+        <span class="self">self</span>.result = <span class="bi">None</span>
+        win = tk.<span class="cls">Toplevel</span>(parent)
+        win.<span class="fn">grab_set</span>()          <span class="cm"># capture all input events</span>
+        win.<span class="fn">transient</span>(parent)   <span class="cm"># stay above parent</span>
+        win.<span class="fn">title</span>(<span class="str">"Enter Name"</span>)
+
+        name = tk.<span class="cls">StringVar</span>()
+        ttk.<span class="cls">Label</span>(win, text=<span class="str">"Name:"</span>).<span class="fn">pack</span>(padx=<span class="num">16</span>, pady=(16,4))
+        ttk.<span class="cls">Entry</span>(win, textvariable=name).<span class="fn">pack</span>(padx=<span class="num">16</span>)
+
+        <span class="kw">def</span> <span class="fn">ok</span>():
+            <span class="self">self</span>.result = name.<span class="fn">get</span>()
+            win.<span class="fn">destroy</span>()
+
+        ttk.<span class="cls">Button</span>(win, text=<span class="str">"OK"</span>, command=ok).<span class="fn">pack</span>(pady=<span class="num">12</span>)
+        parent.<span class="fn">wait_window</span>(win)  <span class="cm"># block until closed</span>
+
+dlg = <span class="cls">AskNameDialog</span>(root)
+<span class="fn">print</span>(dlg.result)  <span class="cm"># available after dialog closes</span></code></pre></div>
+
+<h2>Close Protocol</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">confirm_close.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">from</span> tkinter <span class="kw">import</span> messagebox
+
+<span class="kw">def</span> <span class="fn">on_close</span>():
+    <span class="kw">if</span> messagebox.<span class="fn">askokcancel</span>(<span class="str">"Quit"</span>, <span class="str">"Do you want to quit?"</span>):
+        root.<span class="fn">destroy</span>()
+
+root.<span class="fn">protocol</span>(<span class="str">"WM_DELETE_WINDOW"</span>, on_close)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-ttk-overview">
+
+<div class="page-header"><div class="tag">Themed Widgets</div>
+<h1>TTK Overview<span class="subtitle">Native-looking widgets with a powerful style engine</span></h1></div>
+
+<h2>Importing</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">import_ttk.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">import</span> tkinter <span class="kw">as</span> tk
+<span class="kw">from</span> tkinter <span class="kw">import</span> ttk</code></pre></div>
+
+<h2>tk vs ttk Key Differences</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Feature</th><th>tk widgets</th><th>ttk widgets</th></tr></thead>
+<tbody>
+<tr><td>Appearance</td><td>Custom cross-platform</td><td>Native OS look</td></tr>
+<tr><td>Color/font config</td><td>bg=, fg=, font= directly</td><td>Via ttk.Style</td></tr>
+<tr><td>State system</td><td>state="disabled"</td><td>widget.state(["disabled"])</td></tr>
+<tr><td>Extra widgets</td><td>None</td><td>Treeview, Notebook, Progressbar, Combobox, Separator, Sizegrip</td></tr>
+</tbody></table></div>
+
+<h2>Available Themes</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">themes.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>style = ttk.<span class="cls">Style</span>()
+<span class="fn">print</span>(style.<span class="fn">theme_names</span>())   <span class="cm"># list available</span>
+<span class="fn">print</span>(style.<span class="fn">theme_use</span>())    <span class="cm"># current theme</span>
+style.<span class="fn">theme_use</span>(<span class="str">"clam"</span>)     <span class="cm"># switch theme</span></code></pre></div>
+
+<h2>State System</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">ttk_state.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>btn.<span class="fn">state</span>([<span class="str">"disabled"</span>])          <span class="cm"># set flag</span>
+btn.<span class="fn">state</span>([<span class="str">"!disabled"</span>])         <span class="cm"># clear flag (! = negate)</span>
+<span class="fn">print</span>(btn.<span class="fn">instate</span>([<span class="str">"disabled"</span>])) <span class="cm"># True/False</span>
+<span class="fn">print</span>(btn.<span class="fn">state</span>())                <span class="cm"># e.g. ('focus',)</span></code></pre></div>
+
+<h2>All TTK Widgets</h2>
+<div class="widget-grid">
+  <a href="#" onclick="showPage('ttk-notebook')" class="widget-card"><div class="wc-name">Notebook</div><div class="wc-desc">Tabbed pages</div></a>
+  <a href="#" onclick="showPage('ttk-treeview')" class="widget-card"><div class="wc-name">Treeview</div><div class="wc-desc">Table + tree data view</div></a>
+  <a href="#" onclick="showPage('ttk-progressbar')" class="widget-card"><div class="wc-name">Progressbar</div><div class="wc-desc">Progress indicator</div></a>
+  <a href="#" onclick="showPage('ttk-combobox')" class="widget-card"><div class="wc-name">Combobox</div><div class="wc-desc">Dropdown + entry</div></a>
+  <a href="#" onclick="showPage('ttk-style')" class="widget-card"><div class="wc-name">Style</div><div class="wc-desc">Appearance engine</div></a>
+</div>
+
+</div>
+
+<div class="page-section" id="page-ttk-style">
+
+<div class="page-header"><div class="tag">Themed Widgets</div>
+<h1>TTK Style<span class="subtitle">Customising the appearance of themed widgets</span></h1></div>
+
+<h2>configure()</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">style_basic.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>style = ttk.<span class="cls">Style</span>(root)
+style.<span class="fn">theme_use</span>(<span class="str">"clam"</span>)
+
+style.<span class="fn">configure</span>(<span class="str">"TButton"</span>,
+    font=(<span class="str">"Helvetica"</span>, <span class="num">11</span>, <span class="str">"bold"</span>),
+    padding=(<span class="num">10</span>, <span class="num">6</span>),
+    background=<span class="str">"#2563eb"</span>,
+    foreground=<span class="str">"white"</span>)</code></pre></div>
+
+<h2>map() — State-Based Styles</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">style_map.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>style.<span class="fn">map</span>(<span class="str">"TButton"</span>,
+    background=[
+        (<span class="str">"disabled"</span>, <span class="str">"#9ca3af"</span>),
+        (<span class="str">"active"</span>,   <span class="str">"#1d4ed8"</span>),
+        (<span class="str">"pressed"</span>,  <span class="str">"#1e3a8a"</span>),
+        (<span class="str">"!disabled"</span>,<span class="str">"#2563eb"</span>),
+    ],
+    foreground=[(<span class="str">"disabled"</span>,<span class="str">"#e5e7eb"</span>),(<span class="str">"!disabled"</span>,<span class="str">"white"</span>)],
+)</code></pre></div>
+
+<h2>Named (Custom) Styles</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">named_styles.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="cm"># Name must end with .TClassName</span>
+style.<span class="fn">configure</span>(<span class="str">"Danger.TButton"</span>, background=<span class="str">"#dc2626"</span>, foreground=<span class="str">"white"</span>)
+style.<span class="fn">configure</span>(<span class="str">"Success.TButton"</span>,background=<span class="str">"#16a34a"</span>, foreground=<span class="str">"white"</span>)
+
+ttk.<span class="cls">Button</span>(root, text=<span class="str">"Delete"</span>,  style=<span class="str">"Danger.TButton"</span>).<span class="fn">pack</span>()
+ttk.<span class="cls">Button</span>(root, text=<span class="str">"Confirm"</span>, style=<span class="str">"Success.TButton"</span>).<span class="fn">pack</span>()</code></pre></div>
+
+<h2>Debugging</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">debug.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="fn">print</span>(style.<span class="fn">configure</span>(<span class="str">"TButton"</span>))          <span class="cm"># current settings</span>
+<span class="fn">print</span>(style.<span class="fn">lookup</span>(<span class="str">"TButton"</span>, <span class="str">"background"</span>))<span class="cm"># resolved value</span>
+<span class="fn">print</span>(style.<span class="fn">layout</span>(<span class="str">"TButton"</span>))             <span class="cm"># element layout</span></code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-ttk-notebook">
+
+<div class="page-header"><div class="tag">Themed Widget</div>
+<h1>ttk.Notebook<span class="subtitle">Tab-based multi-page container</span></h1></div>
+<span class="tag-teal">ttk.Notebook</span>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">notebook_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>nb = ttk.<span class="cls">Notebook</span>(root)
+nb.<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="bi">True</span>, padx=<span class="num">8</span>, pady=<span class="num">8</span>)
+
+tab1 = ttk.<span class="cls">Frame</span>(nb, padding=<span class="num">12</span>)
+tab2 = ttk.<span class="cls">Frame</span>(nb, padding=<span class="num">12</span>)
+
+nb.<span class="fn">add</span>(tab1, text=<span class="str">"General"</span>)
+nb.<span class="fn">add</span>(tab2, text=<span class="str">"Advanced"</span>)
+
+ttk.<span class="cls">Label</span>(tab1, text=<span class="str">"General settings"</span>).<span class="fn">pack</span>()
+ttk.<span class="cls">Label</span>(tab2, text=<span class="str">"Advanced options"</span>).<span class="fn">pack</span>()</code></pre></div>
+
+<h2>Methods</h2>
+<div class="sig"><span class="name">nb.add</span>(<span class="arg">child</span>, <span class="arg">text=</span>, <span class="arg">state=</span>, <span class="arg">image=</span>)</div>
+<div class="sig"><span class="name">nb.insert</span>(<span class="arg">pos</span>, <span class="arg">child</span>, <span class="arg">**opts</span>)</div>
+<div class="sig"><span class="name">nb.forget</span>(<span class="arg">tab_id</span>) — Remove tab</div>
+<div class="sig"><span class="name">nb.hide</span>(<span class="arg">tab_id</span>) — Hide without removing</div>
+<div class="sig"><span class="name">nb.select</span>(<span class="arg">tab_id</span>=<span class="default">None</span>) <span class="ret">→ tab_id</span> — Get or switch</div>
+<div class="sig"><span class="name">nb.tab</span>(<span class="arg">tab_id</span>, <span class="arg">option</span>=<span class="default">None</span>) — Get/set tab options</div>
+<div class="sig"><span class="name">nb.enable_traversal</span>() — Ctrl+Tab keyboard navigation</div>
+
+<h2>Tab Change Event</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">tab_events.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">def</span> <span class="fn">on_change</span>(event):
+    sel  = nb.<span class="fn">select</span>()
+    text = nb.<span class="fn">tab</span>(sel, <span class="str">"text"</span>)
+    <span class="fn">print</span>(<span class="str">f"Switched to: {text}"</span>)
+
+nb.<span class="fn">bind</span>(<span class="str">"&lt;&lt;NotebookTabChanged&gt;&gt;"</span>, on_change)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-ttk-treeview">
+
+<div class="page-header"><div class="tag">Themed Widget</div>
+<h1>ttk.Treeview<span class="subtitle">Hierarchical data display and sortable tables</span></h1></div>
+<span class="tag-teal">ttk.Treeview</span>
+
+<h2>Table Mode</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">treeview_table.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>columns = (<span class="str">"name"</span>, <span class="str">"age"</span>, <span class="str">"city"</span>)
+tree = ttk.<span class="cls">Treeview</span>(root, columns=columns, show=<span class="str">"headings"</span>, height=<span class="num">8</span>)
+
+<span class="kw">for</span> col <span class="kw">in</span> columns:
+    tree.<span class="fn">heading</span>(col, text=col.<span class="fn">title</span>())
+
+<span class="kw">for</span> row <span class="kw">in</span> [(<span class="str">"Alice"</span>,<span class="num">30</span>,<span class="str">"NYC"</span>),(<span class="str">"Bob"</span>,<span class="num">24</span>,<span class="str">"London"</span>),(<span class="str">"Carol"</span>,<span class="num">35</span>,<span class="str">"Tokyo"</span>)]:
+    tree.<span class="fn">insert</span>(<span class="str">""</span>, tk.<span class="bi">END</span>, values=row)
+
+tree.<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="bi">True</span>)</code></pre></div>
+
+<h2>Tree Mode</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">treeview_tree.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>tree = ttk.<span class="cls">Treeview</span>(root)
+food   = tree.<span class="fn">insert</span>(<span class="str">""</span>, tk.<span class="bi">END</span>, text=<span class="str">"Food"</span>,  open=<span class="bi">True</span>)
+fruit  = tree.<span class="fn">insert</span>(food, tk.<span class="bi">END</span>, text=<span class="str">"Fruit"</span>)
+tree.<span class="fn">insert</span>(fruit, tk.<span class="bi">END</span>, text=<span class="str">"Apple"</span>)
+tree.<span class="fn">insert</span>(fruit, tk.<span class="bi">END</span>, text=<span class="str">"Banana"</span>)</code></pre></div>
+
+<h2>Sortable Columns</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">sort_columns.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">def</span> <span class="fn">sort_col</span>(tree, col, reverse):
+    data = [(tree.<span class="fn">set</span>(iid, col), iid) <span class="kw">for</span> iid <span class="kw">in</span> tree.<span class="fn">get_children</span>()]
+    data.<span class="fn">sort</span>(reverse=reverse)
+    <span class="kw">for</span> i, (_, iid) <span class="kw">in</span> <span class="fn">enumerate</span>(data):
+        tree.<span class="fn">move</span>(iid, <span class="str">""</span>, i)
+    tree.<span class="fn">heading</span>(col, command=<span class="kw">lambda</span>: <span class="fn">sort_col</span>(tree, col, <span class="kw">not</span> reverse))
+
+<span class="kw">for</span> col <span class="kw">in</span> columns:
+    tree.<span class="fn">heading</span>(col, text=col.<span class="fn">title</span>(),
+                 command=<span class="kw">lambda</span> c=col: <span class="fn">sort_col</span>(tree, c, <span class="bi">False</span>))</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-ttk-progressbar">
+
+<div class="page-header"><div class="tag">Themed Widget</div>
+<h1>ttk.Progressbar<span class="subtitle">Determinate and indeterminate progress</span></h1></div>
+<span class="tag-teal">ttk.Progressbar</span>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">progressbar_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>progress = tk.<span class="cls">IntVar</span>(value=<span class="num">0</span>)
+
+<span class="cm"># Determinate — shows exact %</span>
+bar = ttk.<span class="cls">Progressbar</span>(root, variable=progress, maximum=<span class="num">100</span>, length=<span class="num">300</span>)
+bar.<span class="fn">pack</span>(pady=<span class="num">20</span>)
+
+<span class="cm"># Indeterminate — animated "working" bar</span>
+busy = ttk.<span class="cls">Progressbar</span>(root, mode=<span class="str">"indeterminate"</span>, length=<span class="num">300</span>)
+busy.<span class="fn">pack</span>(pady=<span class="num">8</span>)
+busy.<span class="fn">start</span>(<span class="num">15</span>)   <span class="cm"># ms between steps</span></code></pre></div>
+
+<h2>With Background Thread</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">progress_thread.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">import</span> threading, time
+
+progress = tk.<span class="cls">DoubleVar</span>()
+bar = ttk.<span class="cls">Progressbar</span>(root, variable=progress, maximum=<span class="num">100</span>, length=<span class="num">300</span>)
+bar.<span class="fn">pack</span>(pady=<span class="num">20</span>)
+
+<span class="kw">def</span> <span class="fn">work</span>():
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">101</span>):
+        time.<span class="fn">sleep</span>(<span class="num">0.05</span>)
+        root.<span class="fn">after</span>(<span class="num">0</span>, progress.<span class="fn">set</span>, i)
+
+threading.<span class="cls">Thread</span>(target=work, daemon=<span class="bi">True</span>).<span class="fn">start</span>()</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-ttk-combobox">
+
+<div class="page-header"><div class="tag">Themed Widget</div>
+<h1>ttk.Combobox<span class="subtitle">Dropdown selector with editable entry</span></h1></div>
+<span class="tag-teal">ttk.Combobox</span>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">combobox_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>country = tk.<span class="cls">StringVar</span>()
+combo = ttk.<span class="cls">Combobox</span>(root,
+    textvariable=country,
+    values=[<span class="str">"Canada"</span>, <span class="str">"France"</span>, <span class="str">"Germany"</span>, <span class="str">"Japan"</span>, <span class="str">"UK"</span>, <span class="str">"USA"</span>],
+    state=<span class="str">"readonly"</span>,
+    width=<span class="num">18</span>)
+combo.<span class="fn">pack</span>(pady=<span class="num">12</span>)
+combo.<span class="fn">set</span>(<span class="str">"USA"</span>)
+
+combo.<span class="fn">bind</span>(<span class="str">"&lt;&lt;ComboboxSelected&gt;&gt;"</span>,
+    <span class="kw">lambda</span> e: <span class="fn">print</span>(<span class="str">"Selected:"</span>, country.<span class="fn">get</span>()))</code></pre></div>
+
+<h2>Key Options</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>values</td><td>List/tuple of dropdown options</td></tr>
+<tr><td>state</td><td>"normal" (editable), "readonly", "disabled"</td></tr>
+<tr><td>height</td><td>Max rows shown in dropdown</td></tr>
+<tr><td>postcommand</td><td>Callback fired before dropdown opens (to refresh values)</td></tr>
+</tbody></table></div>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">dynamic_combo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="cm"># Refresh values just before dropdown opens</span>
+<span class="kw">def</span> <span class="fn">refresh</span>():
+    combo[<span class="str">"values"</span>] = get_current_options()
+
+combo.configure(postcommand=refresh)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-dialogs">
+
+<div class="page-header"><div class="tag">Advanced</div>
+<h1>Standard Dialogs<span class="subtitle">messagebox, filedialog, colorchooser, simpledialog</span></h1></div>
+
+<h2>messagebox</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">messagebox_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">from</span> tkinter <span class="kw">import</span> messagebox
+
+messagebox.<span class="fn">showinfo</span>   (<span class="str">"Done"</span>,    <span class="str">"File saved."</span>)
+messagebox.<span class="fn">showwarning</span>(<span class="str">"Warning"</span>, <span class="str">"Low disk space."</span>)
+messagebox.<span class="fn">showerror</span>  (<span class="str">"Error"</span>,   <span class="str">"File not found."</span>)
+
+<span class="kw">if</span> messagebox.<span class="fn">askyesno</span>(<span class="str">"Confirm"</span>, <span class="str">"Delete this item?"</span>):
+    delete_item()
+
+<span class="kw">if</span> messagebox.<span class="fn">askokcancel</span>(<span class="str">"Quit"</span>, <span class="str">"Unsaved changes. Quit anyway?"</span>):
+    root.<span class="fn">destroy</span>()</code></pre></div>
+
+<h2>filedialog</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">filedialog_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">from</span> tkinter <span class="kw">import</span> filedialog
+
+path = filedialog.<span class="fn">askopenfilename</span>(
+    title=<span class="str">"Open File"</span>,
+    filetypes=[(<span class="str">"Text files"</span>,<span class="str">"*.txt"</span>),(<span class="str">"All files"</span>,<span class="str">"*.*"</span>)])
+<span class="kw">if</span> path: <span class="fn">print</span>(<span class="str">f"Opening: {path}"</span>)
+
+save_path = filedialog.<span class="fn">asksaveasfilename</span>(defaultextension=<span class="str">".txt"</span>)
+folder    = filedialog.<span class="fn">askdirectory</span>(title=<span class="str">"Select Folder"</span>)</code></pre></div>
+
+<h2>colorchooser</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">colorchooser_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">from</span> tkinter <span class="kw">import</span> colorchooser
+
+<span class="cm"># Returns ((R,G,B), "#rrggbb") or (None, None) if cancelled</span>
+rgb, hex_col = colorchooser.<span class="fn">askcolor</span>(color=<span class="str">"#ff0000"</span>, title=<span class="str">"Pick Colour"</span>)
+<span class="kw">if</span> hex_col:
+    label.<span class="fn">config</span>(bg=hex_col)</code></pre></div>
+
+<h2>simpledialog</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">simpledialog_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">from</span> tkinter <span class="kw">import</span> simpledialog
+
+name  = simpledialog.<span class="fn">askstring</span> (<span class="str">"Name"</span>,  <span class="str">"Enter your name:"</span>)
+age   = simpledialog.<span class="fn">askinteger</span>(<span class="str">"Age"</span>,   <span class="str">"Enter your age:"</span>, minvalue=<span class="num">0</span>, maxvalue=<span class="num">150</span>)
+price = simpledialog.<span class="fn">askfloat</span>  (<span class="str">"Price"</span>, <span class="str">"Enter price:"</span>,   minvalue=<span class="num">0.0</span>)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-threading">
+
+<div class="page-header"><div class="tag">Advanced</div>
+<h1>Threading<span class="subtitle">Keeping your UI responsive during long operations</span></h1></div>
+
+<div class="callout danger"><div class="callout-title">🚫 Never call Tkinter from a non-main thread</div><p>Tkinter is <em>not thread-safe</em>. Only the main thread should call Tk methods. Background threads must send results back via <code>root.after(0, callback, result)</code> or a <code>queue.Queue</code>.</p></div>
+
+<h2>Background Thread + after()</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">background_thread.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">import</span> threading, time
+<span class="kw">import</span> tkinter <span class="kw">as</span> tk
+<span class="kw">from</span> tkinter <span class="kw">import</span> ttk
+
+root = tk.<span class="cls">Tk</span>()
+status = ttk.<span class="cls">Label</span>(root, text=<span class="str">"Idle"</span>)
+status.<span class="fn">pack</span>(pady=<span class="num">8</span>)
+bar = ttk.<span class="cls">Progressbar</span>(root, mode=<span class="str">"indeterminate"</span>, length=<span class="num">200</span>)
+bar.<span class="fn">pack</span>(pady=<span class="num">4</span>)
+
+<span class="kw">def</span> <span class="fn">do_work</span>():
+    time.<span class="fn">sleep</span>(<span class="num">3</span>)               <span class="cm"># your long-running task here</span>
+    result = <span class="str">"42"</span>
+    root.<span class="fn">after</span>(<span class="num">0</span>, on_done, result)   <span class="cm"># safe callback to main thread</span>
+
+<span class="kw">def</span> <span class="fn">on_done</span>(result):
+    bar.<span class="fn">stop</span>()
+    status.<span class="fn">config</span>(text=<span class="str">f"Result: {result}"</span>)
+    btn.<span class="fn">state</span>([<span class="str">"!disabled"</span>])
+
+<span class="kw">def</span> <span class="fn">start</span>():
+    btn.<span class="fn">state</span>([<span class="str">"disabled"</span>])
+    status.<span class="fn">config</span>(text=<span class="str">"Working…"</span>)
+    bar.<span class="fn">start</span>(<span class="num">10</span>)
+    threading.<span class="cls">Thread</span>(target=do_work, daemon=<span class="bi">True</span>).<span class="fn">start</span>()
+
+btn = ttk.<span class="cls">Button</span>(root, text=<span class="str">"Start"</span>, command=start)
+btn.<span class="fn">pack</span>(pady=<span class="num">8</span>)
+root.<span class="fn">mainloop</span>()</code></pre></div>
+
+<h2>Thread-Safe Queue Pattern</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">queue_pattern.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">import</span> threading, queue, time
+
+msg_queue = queue.<span class="cls">Queue</span>()
+
+<span class="kw">def</span> <span class="fn">worker</span>():
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>):
+        time.<span class="fn">sleep</span>(<span class="num">0.5</span>)
+        msg_queue.<span class="fn">put</span>(<span class="str">f"Step {i+1}/10
+"</span>)
+    msg_queue.<span class="fn">put</span>(<span class="bi">None</span>)   <span class="cm"># sentinel: done</span>
+
+<span class="kw">def</span> <span class="fn">poll</span>():
+    <span class="kw">while</span> <span class="bi">True</span>:
+        <span class="kw">try</span>:
+            msg = msg_queue.<span class="fn">get_nowait</span>()
+        <span class="kw">except</span> queue.<span class="cls">Empty</span>:
+            <span class="kw">break</span>
+        <span class="kw">if</span> msg <span class="kw">is</span> <span class="bi">None</span>: <span class="kw">return</span>
+        log.<span class="fn">config</span>(state=<span class="str">"normal"</span>)
+        log.<span class="fn">insert</span>(<span class="str">"end"</span>, msg)
+        log.<span class="fn">config</span>(state=<span class="str">"disabled"</span>)
+    root.<span class="fn">after</span>(<span class="num">100</span>, poll)   <span class="cm"># check again in 100ms</span>
+
+threading.<span class="cls">Thread</span>(target=worker, daemon=<span class="bi">True</span>).<span class="fn">start</span>()
+root.<span class="fn">after</span>(<span class="num">100</span>, poll)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-images">
+
+<div class="page-header"><div class="tag">Graphics</div>
+<h1>Images<span class="subtitle">PhotoImage, BitmapImage, and Pillow integration</span></h1></div>
+
+<h2>PhotoImage (Built-in)</h2>
+<p>Supports GIF, PGM, PPM, and PNG natively. For JPEG and other formats use <strong>Pillow</strong>.</p>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">photoimage.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>img = tk.<span class="cls">PhotoImage</span>(file=<span class="str">"photo.png"</span>)
+
+label = ttk.<span class="cls">Label</span>(root, image=img)
+label.image = img   <span class="cm"># ← MUST keep reference or image vanishes!</span>
+label.<span class="fn">pack</span>()
+
+<span class="cm"># Resize (integer factors only)</span>
+small = img.<span class="fn">subsample</span>(<span class="num">2</span>, <span class="num">2</span>)   <span class="cm"># ÷2</span>
+big   = img.<span class="fn">zoom</span>(<span class="num">3</span>, <span class="num">3</span>)         <span class="cm"># ×3</span></code></pre></div>
+
+<div class="callout warn"><div class="callout-title">⚠️ The Garbage Collection Gotcha</div><p>Always assign your <code>PhotoImage</code> to <code>self.img</code> or <code>widget.image</code>. Local variables get garbage-collected before Tk renders the image.</p></div>
+
+<h2>Pillow for JPEG &amp; More</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">terminal</div></div>
+<pre><code>pip install Pillow</code></pre></div>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">pillow_demo.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">from</span> PIL <span class="kw">import</span> Image, ImageTk
+
+pil_img = Image.<span class="fn">open</span>(<span class="str">"photo.jpg"</span>)
+pil_img = pil_img.<span class="fn">resize</span>((<span class="num">200</span>, <span class="num">200</span>), Image.<span class="bi">LANCZOS</span>)
+tk_img  = ImageTk.<span class="cls">PhotoImage</span>(pil_img)
+
+label = tk.<span class="cls">Label</span>(root, image=tk_img)
+label.image = tk_img   <span class="cm"># keep reference</span>
+label.<span class="fn">pack</span>()</code></pre></div>
+
+<h2>Images on Canvas</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">canvas_image.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>canvas = tk.<span class="cls">Canvas</span>(root, width=<span class="num">400</span>, height=<span class="num">300</span>)
+canvas.<span class="fn">pack</span>()
+img = tk.<span class="cls">PhotoImage</span>(file=<span class="str">"bg.png"</span>)
+canvas.image = img
+canvas.<span class="fn">create_image</span>(<span class="num">0</span>, <span class="num">0</span>, image=img, anchor=<span class="str">"nw"</span>)</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-fonts">
+
+<div class="page-header"><div class="tag">Graphics</div>
+<h1>Fonts<span class="subtitle">Using and customising fonts with tkinter.font</span></h1></div>
+
+<h2>Specifying Fonts</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">font_formats.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">from</span> tkinter <span class="kw">import</span> font
+
+<span class="cm"># Tuple format (family, size, style...)</span>
+tk.<span class="cls">Label</span>(root, font=(<span class="str">"Helvetica"</span>, <span class="num">14</span>, <span class="str">"bold italic"</span>))
+
+<span class="cm"># Font object (most flexible)</span>
+my_font = font.<span class="cls">Font</span>(family=<span class="str">"Helvetica"</span>, size=<span class="num">14</span>, weight=<span class="str">"bold"</span>)
+tk.<span class="cls">Label</span>(root, font=my_font)</code></pre></div>
+
+<h2>Named System Fonts</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>Use</th></tr></thead>
+<tbody>
+<tr><td>TkDefaultFont</td><td>Default for most widgets</td></tr>
+<tr><td>TkTextFont</td><td>Entry, Text widgets</td></tr>
+<tr><td>TkFixedFont</td><td>Monospace / code</td></tr>
+<tr><td>TkMenuFont</td><td>Menu items</td></tr>
+<tr><td>TkHeadingFont</td><td>Column headings</td></tr>
+<tr><td>TkCaptionFont</td><td>Window titles</td></tr>
+</tbody></table></div>
+
+<h2>Font Object Methods</h2>
+<div class="sig"><span class="name">f.actual</span>(<span class="arg">option</span>=<span class="default">None</span>) <span class="ret">→ dict</span> — Actual rendered properties</div>
+<div class="sig"><span class="name">f.configure</span>(<span class="arg">**opts</span>) — Change font (updates all linked widgets)</div>
+<div class="sig"><span class="name">f.measure</span>(<span class="arg">text</span>) <span class="ret">→ int</span> — Width in pixels</div>
+<div class="sig"><span class="name">f.metrics</span>() <span class="ret">→ dict</span> — ascent, descent, fixed, linespace</div>
+
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">change_default_font.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="cm"># Change default font for ALL widgets at once</span>
+font.<span class="fn">nametofont</span>(<span class="str">"TkDefaultFont"</span>).configure(family=<span class="str">"Arial"</span>, size=<span class="num">11</span>)
+font.<span class="fn">nametofont</span>(<span class="str">"TkTextFont"</span>).configure(family=<span class="str">"Consolas"</span>, size=<span class="num">11</span>)
+
+<span class="cm"># List all available font families</span>
+<span class="fn">print</span>(<span class="fn">sorted</span>(font.<span class="fn">families</span>()))</code></pre></div>
+
+</div>
+
+<div class="page-section" id="page-patterns">
+
+<div class="page-header"><div class="tag">Reference</div>
+<h1>Common Patterns<span class="subtitle">Reusable recipes for everyday Tkinter tasks</span></h1></div>
+
+<h2>MVC Application Structure</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">mvc_pattern.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">class</span> <span class="cls">Model</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>): <span class="self">self</span>.items = []
+    <span class="kw">def</span> <span class="fn">add</span>(<span class="self">self</span>, item): <span class="self">self</span>.items.<span class="fn">append</span>(item)
+
+<span class="kw">class</span> <span class="cls">View</span>(ttk.<span class="cls">Frame</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, parent):
+        <span class="fn">super</span>().__init__(parent, padding=<span class="num">12</span>)
+        <span class="self">self</span>.entry_var = tk.<span class="cls">StringVar</span>()
+        ttk.<span class="cls">Entry</span>(<span class="self">self</span>, textvariable=<span class="self">self</span>.entry_var).<span class="fn">pack</span>(fill=<span class="str">"x"</span>)
+        <span class="self">self</span>.add_btn = ttk.<span class="cls">Button</span>(<span class="self">self</span>, text=<span class="str">"Add"</span>)
+        <span class="self">self</span>.add_btn.<span class="fn">pack</span>(pady=<span class="num">4</span>)
+        <span class="self">self</span>.lb = tk.<span class="cls">Listbox</span>(<span class="self">self</span>)
+        <span class="self">self</span>.lb.<span class="fn">pack</span>(fill=<span class="str">"both"</span>, expand=<span class="bi">True</span>)
+    <span class="kw">def</span> <span class="fn">refresh</span>(<span class="self">self</span>, items):
+        <span class="self">self</span>.lb.<span class="fn">delete</span>(<span class="num">0</span>, tk.<span class="bi">END</span>)
+        <span class="kw">for</span> item <span class="kw">in</span> items: <span class="self">self</span>.lb.<span class="fn">insert</span>(tk.<span class="bi">END</span>, item)
+
+<span class="kw">class</span> <span class="cls">Controller</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, model, view):
+        <span class="self">self</span>.m, <span class="self">self</span>.v = model, view
+        view.add_btn.configure(command=<span class="self">self</span>._add)
+    <span class="kw">def</span> <span class="fn">_add</span>(<span class="self">self</span>):
+        t = <span class="self">self</span>.v.entry_var.<span class="fn">get</span>().<span class="fn">strip</span>()
+        <span class="kw">if</span> t: <span class="self">self</span>.m.<span class="fn">add</span>(t); <span class="self">self</span>.v.entry_var.<span class="fn">set</span>(<span class="str">""</span>); <span class="self">self</span>.v.<span class="fn">refresh</span>(<span class="self">self</span>.m.items)</code></pre></div>
+
+<h2>Scrollable Frame</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">scrollable_frame.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">class</span> <span class="cls">ScrollableFrame</span>(ttk.<span class="cls">Frame</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, parent, **kw):
+        <span class="fn">super</span>().__init__(parent, **kw)
+        canvas = tk.<span class="cls">Canvas</span>(<span class="self">self</span>, highlightthickness=<span class="num">0</span>)
+        sb = ttk.<span class="cls">Scrollbar</span>(<span class="self">self</span>, orient=<span class="str">"vertical"</span>, command=canvas.<span class="fn">yview</span>)
+        canvas.configure(yscrollcommand=sb.<span class="fn">set</span>)
+        sb.<span class="fn">pack</span>(side=<span class="str">"right"</span>, fill=<span class="str">"y"</span>)
+        canvas.<span class="fn">pack</span>(side=<span class="str">"left"</span>, fill=<span class="str">"both"</span>, expand=<span class="bi">True</span>)
+        <span class="self">self</span>.inner = ttk.<span class="cls">Frame</span>(canvas)
+        wid = canvas.<span class="fn">create_window</span>((<span class="num">0</span>,<span class="num">0</span>), window=<span class="self">self</span>.inner, anchor=<span class="str">"nw"</span>)
+        <span class="self">self</span>.inner.<span class="fn">bind</span>(<span class="str">"&lt;Configure&gt;"</span>,
+            <span class="kw">lambda</span> e: canvas.configure(scrollregion=canvas.<span class="fn">bbox</span>(<span class="str">"all"</span>)))
+        canvas.<span class="fn">bind</span>(<span class="str">"&lt;Configure&gt;"</span>,
+            <span class="kw">lambda</span> e: canvas.<span class="fn">itemconfig</span>(wid, width=e.width))
+        canvas.<span class="fn">bind</span>(<span class="str">"&lt;MouseWheel&gt;"</span>,
+            <span class="kw">lambda</span> e: canvas.<span class="fn">yview_scroll</span>(-<span class="num">1</span>*(e.delta//<span class="num">120</span>), <span class="str">"units"</span>))</code></pre></div>
+
+<h2>Tooltip</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">tooltip.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">class</span> <span class="cls">Tooltip</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="self">self</span>, widget, text):
+        <span class="self">self</span>.widget = widget
+        <span class="self">self</span>.text   = text
+        <span class="self">self</span>.tip    = <span class="bi">None</span>
+        widget.<span class="fn">bind</span>(<span class="str">"&lt;Enter&gt;"</span>, <span class="self">self</span>._show)
+        widget.<span class="fn">bind</span>(<span class="str">"&lt;Leave&gt;"</span>, <span class="self">self</span>._hide)
+
+    <span class="kw">def</span> <span class="fn">_show</span>(<span class="self">self</span>, event):
+        x = <span class="self">self</span>.widget.winfo_rootx() + <span class="num">20</span>
+        y = <span class="self">self</span>.widget.winfo_rooty() + <span class="self">self</span>.widget.winfo_height() + <span class="num">4</span>
+        <span class="self">self</span>.tip = tw = tk.<span class="cls">Toplevel</span>(<span class="self">self</span>.widget)
+        tw.<span class="fn">wm_overrideredirect</span>(<span class="bi">True</span>)
+        tw.<span class="fn">wm_geometry</span>(<span class="str">f"+{x}+{y}"</span>)
+        tk.<span class="cls">Label</span>(tw, text=<span class="self">self</span>.text, bg=<span class="str">"#ffffe0"</span>,
+                relief=<span class="str">"solid"</span>, bd=<span class="num">1</span>, padx=<span class="num">4</span>).<span class="fn">pack</span>()
+
+    <span class="kw">def</span> <span class="fn">_hide</span>(<span class="self">self</span>, event):
+        <span class="kw">if</span> <span class="self">self</span>.tip: <span class="self">self</span>.tip.<span class="fn">destroy</span>(); <span class="self">self</span>.tip = <span class="bi">None</span>
+
+<span class="cls">Tooltip</span>(save_btn, <span class="str">"Save the current file (Ctrl+S)"</span>)</code></pre></div>
+
+<h2>Center Window on Screen</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">center_window.py</div><button class="copy-btn">Copy</button></div>
+<pre><code><span class="kw">def</span> <span class="fn">center_window</span>(win, width=<span class="num">400</span>, height=<span class="num">300</span>):
+    win.<span class="fn">update_idletasks</span>()
+    sw = win.<span class="fn">winfo_screenwidth</span>()
+    sh = win.<span class="fn">winfo_screenheight</span>()
+    x = (sw - width)  // <span class="num">2</span>
+    y = (sh - height) // <span class="num">2</span>
+    win.<span class="fn">geometry</span>(<span class="str">f"{width}x{height}+{x}+{y}"</span>)
+
+center_window(root, <span class="num">600</span>, <span class="num">400</span>)</code></pre></div>
+
+<h2>Debounced Entry (Search-as-you-type)</h2>
+<div class="code-wrap"><div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><div class="code-title">debounce.py</div><button class="copy-btn">Copy</button></div>
+<pre><code>_after_id = <span class="bi">None</span>
+
+<span class="kw">def</span> <span class="fn">on_key</span>(*_):
+    <span class="kw">global</span> _after_id
+    <span class="kw">if</span> _after_id:
+        root.<span class="fn">after_cancel</span>(_after_id)
+    _after_id = root.<span class="fn">after</span>(<span class="num">300</span>, do_search)   <span class="cm"># 300ms delay</span>
+
+<span class="kw">def</span> <span class="fn">do_search</span>():
+    query = search_var.<span class="fn">get</span>()
+    <span class="cm"># perform search...</span>
+
+search_var.<span class="fn">trace_add</span>(<span class="str">"write"</span>, on_key)</code></pre></div>
+
+</div>
+
+  </article>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('page-' + id);
+  if (el) { el.classList.add('active'); }
+
+  document.querySelectorAll('#sidebar-nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('onclick') && a.getAttribute('onclick').includes("'" + id + "'"));
+  });
+
+  const titles = {'home': 'Overview', 'quickstart': 'Quick Start', 'architecture': 'Architecture', 'geometry': 'Geometry Managers', 'events': 'Events & Bindings', 'variables': 'Tk Variables', 'w-label': 'Label', 'w-button': 'Button', 'w-entry': 'Entry', 'w-text': 'Text Widget', 'w-frame': 'Frame', 'w-canvas': 'Canvas', 'w-listbox': 'Listbox', 'w-scrollbar': 'Scrollbar', 'w-checkbutton': 'Checkbutton', 'w-radiobutton': 'Radiobutton', 'w-scale': 'Scale', 'w-spinbox': 'Spinbox', 'w-menu': 'Menu', 'w-toplevel': 'Toplevel', 'ttk-overview': 'TTK Overview', 'ttk-style': 'TTK Style', 'ttk-notebook': 'ttk.Notebook', 'ttk-treeview': 'ttk.Treeview', 'ttk-progressbar': 'ttk.Progressbar', 'ttk-combobox': 'ttk.Combobox', 'dialogs': 'Dialogs', 'threading': 'Threading', 'images': 'Images', 'fonts': 'Fonts', 'patterns': 'Common Patterns'};
+  document.getElementById('topbar-title').textContent = titles[id] || id;
+  window.scrollTo(0, 0);
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+// Mobile menu
+document.getElementById('menu-btn').addEventListener('click', function() {
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+// Copy buttons
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('copy-btn')) {
+    const pre = e.target.closest('.code-wrap').querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(() => {
+      const orig = e.target.textContent;
+      e.target.textContent = '✓ Copied';
+      e.target.style.color = '#10b981';
+      setTimeout(() => { e.target.textContent = orig; e.target.style.color = ''; }, 1800);
+    });
+  }
+});
+
+// Sidebar search filter
+document.getElementById('sidebar-search').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('#sidebar-nav .nav-section').forEach(sec => {
+    let vis = 0;
+    sec.querySelectorAll('a').forEach(a => {
+      const match = a.textContent.toLowerCase().includes(q);
+      a.style.display = match ? '' : 'none';
+      if (match) vis++;
+    });
+    sec.style.display = (vis || !q) ? '' : 'none';
+  });
+});
+
+// Show home by default
+showPage('home');
+</script>
+
+</body>
+</html>
